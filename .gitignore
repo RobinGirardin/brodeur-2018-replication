@@ -1,0 +1,25 @@
+# RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Quarto
+.quarto/
+_cache/
+*_files/
+
+# Session-Daten
+*.rdb
+*.rdx
+
+# Output-Dateien
+*.html
+*.pdf
+*.docx
+*.pptx
+
+# System-Dateien
+.DS_Store
+Thumbs.db
