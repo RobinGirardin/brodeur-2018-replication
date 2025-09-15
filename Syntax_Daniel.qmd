@@ -35,3 +35,46 @@ summary(df)
 View(variable_table)
 View(df)
 ```
+
+Figure 1 erstellen
+
+```{r}
+#| label: figure 1
+
+df %>%
+  summarise(
+    n_years = n_distinct(year),
+    n_fips  = n_distinct(fips)
+  )
+
+# Prepare the data
+plot_data <- df %>%
+  filter(!is.na(successful)) %>%
+  filter(year >= 1970) %>% 
+  group_by(year, successful) %>%
+  summarise(count_counties = n(), .groups = 'drop')
+
+# Make the plot
+ggplot(plot_data, aes(x = year, y = count_counties, color = factor(successful))) +
+  geom_line(size = 1) +
+  geom_point(size = 1.5) +
+  scale_color_manual(
+    values = c("0" = "#2ECC71", "1" = "#E74C3C"),
+    labels = c("0" = "failed", "1" = "successful"),
+    breaks = c("1", "0")) +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(
+    title = "Figure 1: Number of counties with successful or failed attacks",
+    x = "Jahr",
+    y = "Number of counties",
+    color = "Attack",
+    caption = "Brodeur 2018: his Figure 1 is similar but with different numbers") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 12, hjust = 0.5),
+    axis.title = element_text(size = 10),
+    legend.position = "bottom"
+  )
+
+
+```
