@@ -31,6 +31,7 @@ Check data (in Console) and open variable_table
 
 str(df)
 glimpse(df)
-View(variable_table)
 summary(df)
+View(variable_table)
+View(df)
 ```
