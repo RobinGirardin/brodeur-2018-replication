@@ -19,6 +19,8 @@ _cache/
 *.pdf
 *.docx
 *.pptx
+*.mm
+*.png
 
 # System-Dateien
 .DS_Store

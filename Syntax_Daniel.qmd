@@ -1,0 +1,36 @@
+---
+title: "Brodeur-2018"
+---
+
+## Dani Script for Brodeur 2018 replication
+
+Load libraries.
+
+```{r}
+#| label: libraries
+#| message: false
+
+library(tidyverse)
+```
+
+Load data.
+
+```{r}
+#| label: data load
+#| message: false
+
+load("C:/Users/dhub1/RStudioProjects/Brodeur-2018/Brodeur (2018).RData")
+variable_table <- read_csv("variable_table.csv")
+```
+
+Check data (in Console) and open variable_table
+
+```{r}
+#| label: data check
+#| include: false
+
+str(df)
+glimpse(df)
+View(variable_table)
+summary(df)
+```
