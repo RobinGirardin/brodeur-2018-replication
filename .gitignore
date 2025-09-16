@@ -26,6 +26,9 @@ _cache/
 .DS_Store
 Thumbs.db
 
+# Fixest export file
+data.frame
+
 /.quarto/
 
 **/*.quarto_ipynb
