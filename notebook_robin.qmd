@@ -17,10 +17,10 @@ load("Brodeur (2018).RData")
 ```{r}
 #| include: false
 #| label: imports
+
 library(fixest)
-library(dplyr)
+library(tidyverse)
 library(etable)
-library(ggplot2)
 ```
 
 # Difference-in-Difference
@@ -88,7 +88,6 @@ ln_emp_pop_sum <- df %>%
 print(head(cbind(ln_emp_pop_sum, df %>% select(ln_emp_pop))))
 ```
 
-
 ```{r}
 ln_emp_pop_mean <- df %>% 
     select(contains("emp"), -ln_emp_pop) %>% 
@@ -98,9 +97,7 @@ ln_emp_pop_mean <- df %>%
 print(head(cbind(ln_emp_pop_mean, df %>% select(ln_emp_pop))))
 ```
 
-Before going for the analysis, some preprocessing needs to be done, as predictor employement rate of non-attacked countries using 
-the `SUCESS`, `POST` and fixed-effects values from the attacked counties posed some issues.
-We'll consider neighboring counties counties of the same state.
+Before going for the analysis, some preprocessing needs to be done, as predictor employement rate of non-attacked countries using the `SUCESS`, `POST` and fixed-effects values from the attacked counties posed some issues. We'll consider neighboring counties counties of the same state.
 
 ```{r}
 # Get the state code from the fips code
@@ -151,8 +148,7 @@ finance_ind <- feols(fml = ln_emp_finance_pop ~ successful + post + fips_1009 + 
 etable(gen_ind, manu_ind, const_ind, whole_ind, retail_ind, services_ind, finance_ind)
 ```
 
-Now, let's see wether we get a significant interaction result by analysis the whole state of Arizone (01) for every counties.
-There is no significant interaction effect between the SUCESS treatment variable for every pair of targetted-neighbor counties of Arizona, except for county 1055.
+Now, let's see wether we get a significant interaction result by analysis the whole state of Arizone (01) for every counties. There is no significant interaction effect between the SUCESS treatment variable for every pair of targetted-neighbor counties of Arizona, except for county 1055.
 
 ```{r}
 fips_1009 <- feols(fml = ln_emp_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
