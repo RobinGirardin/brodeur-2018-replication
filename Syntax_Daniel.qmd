@@ -1,5 +1,6 @@
 ---
 title: "Brodeur-2018"
+format: html
 ---
 
 ## Dani Script for Brodeur 2018 replication
@@ -11,12 +12,14 @@ Load libraries.
 #| message: false
 
 library(tidyverse)
+library(fixest)
+library(knitr)
 ```
 
 Load data.
 
 ```{r}
-#| label: data load
+#| label: dataload
 #| message: false
 
 load("C:/Users/dhub1/RStudioProjects/Brodeur-2018/Brodeur (2018).RData")
@@ -26,7 +29,7 @@ variable_table <- read_csv("variable_table.csv")
 Check data (in Console) and open variable_table
 
 ```{r}
-#| label: data check
+#| label: datacheck
 #| include: false
 
 str(df)
@@ -34,29 +37,49 @@ glimpse(df)
 summary(df)
 View(variable_table)
 View(df)
-```
-
-Figure 1 erstellen
-
-```{r}
-#| label: figure 1
-
 df %>%
   summarise(
     n_years = n_distinct(year),
     n_fips  = n_distinct(fips)
-  )
+    )
 
-# Prepare the data
-plot_data <- df %>%
-  filter(!is.na(successful)) %>%
-  filter(year >= 1970) %>% 
-  group_by(year, successful) %>%
-  summarise(count_counties = n(), .groups = 'drop')
+```
+
+Try to replicate Figure 1
+
+```{r}
+#| label: figure1
+
+# Identify transition from 0 to 1 with lag()
+transition_data <- df %>%
+  select(fips, year, successful, successful1, post, meventperyear) %>% 
+  group_by(fips) %>%
+  mutate(
+    post = as.numeric(post),  # converts labelled to numeric
+    post_lead = lead(post),
+    transition = (!is.na(post_lead) & post == 0 & post_lead == 1)
+    # TRUE the year before post changes from 0 to 1
+  ) %>%
+  filter(transition == TRUE) %>%  # only rows with transitions (Jahr VOR dem Übergang)
+  ungroup() %>% 
+  mutate(successful_all = successful1 * meventperyear)
+
+# Table with years, grouped by successful1
+yearly_table <- transition_data %>%
+  group_by(year, successful1) %>%
+  summarise(
+    count_events = case_when(
+      successful1[1] == 0 ~ n(),
+      successful1[1] == 1 ~ sum(successful_all, na.rm = TRUE)),
+    .groups = 'drop')
+
+# yearly_table %>% 
+  # group_by(successful1) %>% 
+  # summarise(sum_events = sum(count_events))
 
 # Make the plot
-ggplot(plot_data, aes(x = year, y = count_counties, color = factor(successful))) +
-  geom_line(size = 1) +
+ggplot(yearly_table, aes(x = year, y = count_events, color = factor(successful1))) +
+  geom_line(linewidth = 1) +
   geom_point(size = 1.5) +
   scale_color_manual(
     values = c("0" = "#2ECC71", "1" = "#E74C3C"),
@@ -76,5 +99,181 @@ ggplot(plot_data, aes(x = year, y = count_counties, color = factor(successful)))
     legend.position = "bottom"
   )
 
+
+```
+
+Replication of table 6:
+
+Create the models
+
+```{r}
+#| label: table6Models
+#| message: false
+
+df_sub <- df %>%
+  filter(!is.na(successful))
+
+# Panel A
+
+# Column 1
+m1 <- feols(
+  ln_emp_pop ~ post | fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+# Column 2
+m2 <- feols(
+  ln_emp_pop ~ post + successful | fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+# Column 3
+m3 <- feols(
+  ln_emp_pop ~ successful + non_us_t + int_l
+  | fips + year + month^year,
+  cluster = ~fips, data = df_sub
+)
+
+# Column 4
+m4 <- feols(
+  ln_emp_pop ~ successful + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend
+  | fips + year + month^year,
+  cluster = ~fips, data = df_sub
+)
+
+# Column 5
+m5 <- feols(
+  ln_emp_pop ~ successful + non_us_t + int_l
+  | fips + year + div_9_all^year,
+  cluster = ~fips, data = df_sub
+)
+
+# Column 6
+m6 <- feols(
+  ln_emp_pop ~ successful + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend
+  | fips + year + div_9_all^year,
+  cluster = ~fips, data = df_sub
+)
+
+# Panel B
+m1_B <- feols(ln_real_qp1_pop ~ post |
+                fips + year + month, cluster = ~fips, data = df_sub)
+m2_B <- feols(ln_real_qp1_pop ~ post + successful |
+                fips + year + month, cluster = ~fips, data = df_sub)
+m3_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l |
+                fips + year + month^year, cluster = ~fips, data = df_sub)
+m4_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l +
+                aa_assass + aa_armed + aa_bomb + aa_facility +
+                ww_firearm + ww_explo + ww_incend |
+                fips + year + month^year, cluster = ~fips, data = df_sub)
+m5_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l |
+                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
+m6_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l +
+                aa_assass + aa_armed + aa_bomb + aa_facility +
+                ww_firearm + ww_explo + ww_incend |
+                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
+
+# Panel C
+m1_C <- feols(ln_real_qp1_job ~ post |
+                fips + year + month, cluster = ~fips, data = df_sub)
+m2_C <- feols(ln_real_qp1_job ~ post + successful |
+                fips + year + month, cluster = ~fips, data = df_sub)
+m3_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l |
+                fips + year + month^year, cluster = ~fips, data = df_sub)
+m4_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l +
+                aa_assass + aa_armed + aa_bomb + aa_facility +
+                ww_firearm + ww_explo + ww_incend |
+                fips + year + month^year, cluster = ~fips, data = df_sub)
+m5_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l |
+                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
+m6_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l +
+                aa_assass + aa_armed + aa_bomb + aa_facility +
+                ww_firearm + ww_explo + ww_incend |
+                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
+
+```
+
+## Create the table 6
+
+```{r}
+#| label: table6Commons
+
+# define common table properties
+dict_common <- c(
+  post = "Post-attack",
+  successful = "Successful attack",
+  meventperyear = "Number of attacks",
+  non_us_t = "Non-US target",
+  int_l = "International attack",
+  aa_assass = "Assassination",
+  aa_armed = "Armed assault",
+  aa_bomb = "Bombing",
+  aa_facility = "Facility attack",
+  ww_firearm = "Firearm",
+  ww_explo = "Explosives",
+  ww_incend = "Incendiary"
+)
+
+order_common <- c(
+  "%successful", "%post", "%meventperyear",
+  "%non_us_t", "%int_l",
+  "%aa_assass", "%aa_armed", "%aa_bomb", "%aa_facility",
+  "%ww_firearm", "%ww_explo", "%ww_incend"
+)
+
+```
+
+### Table 1, Panel A: Employment (ln_emp_pop)
+
+```{r}
+#| label: Table6PanelA
+#| message: false
+
+tab6A <- etable(list(m1, m2, m3, m4, m5, m6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
+       export = TRUE)
+
+knitr::kable(tab6A, format = "pipe")
+
+```
+
+### Table 1, Panel B: Earnings (ln_real_qp1_pop)
+
+```{r}
+#| label: Table6PanelB
+#| message: false
+
+tab6B <- etable(list(m1_B, m2_B, m3_B, m4_B, m5_B, m6_B),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
+       export = TRUE)
+
+knitr::kable(tab6B, format = "pipe")
+
+```
+
+### Table 1, Panel C: Wages (ln_real_qp1_job)
+
+```{r}
+#| label: Table6PanelC
+#| message: false
+
+tab6C <- etable(list(m1_C, m2_C, m3_C, m4_C, m5_C, m6_C),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
+       export = TRUE)
+
+knitr::kable(tab6C, format = "pipe")
 
 ```
