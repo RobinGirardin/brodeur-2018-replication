@@ -120,7 +120,7 @@ m1 <- feols(
 )
 
 m2 <- feols(
-  ln_emp_pop ~ successful + post + meventperyear + non_us_t + int_l |
+  ln_emp_pop ~ successful + post + meventperyear |
     fips + year + month,
   cluster = ~fips, data = df_sub
 )
@@ -164,7 +164,7 @@ m1_B <- feols(
 )
 
 m2_B <- feols(
-  ln_real_qp1_pop ~ successful + post + meventperyear + non_us_t + int_l |
+  ln_real_qp1_pop ~ successful + post + meventperyear |
     fips + year + month,
   cluster = ~fips, data = df_sub
 )
@@ -208,7 +208,7 @@ m1_C <- feols(
 )
 
 m2_C <- feols(
-  ln_real_qp1_job ~ successful + post + meventperyear + non_us_t + int_l |
+  ln_real_qp1_job ~ successful + post + meventperyear |
     fips + year + month,
   cluster = ~fips, data = df_sub
 )
