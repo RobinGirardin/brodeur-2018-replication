@@ -113,87 +113,136 @@ Create the models
 df_sub <- df %>%
   filter(!is.na(successful))
 
-# Panel A
-
-# Column 1
+# Panel A – Brodeur Table 6
 m1 <- feols(
-  ln_emp_pop ~ post | fips + year + month,
+  ln_emp_pop ~ post + meventperyear | fips + year + month,
   cluster = ~fips, data = df_sub
 )
 
-# Column 2
 m2 <- feols(
-  ln_emp_pop ~ post + successful | fips + year + month,
+  ln_emp_pop ~ successful + post + meventperyear + non_us_t + int_l |
+    fips + year + month,
   cluster = ~fips, data = df_sub
 )
 
-# Column 3
 m3 <- feols(
-  ln_emp_pop ~ successful + non_us_t + int_l
-  | fips + year + month^year,
+  ln_emp_pop ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility |
+    fips + year + month,
   cluster = ~fips, data = df_sub
 )
 
-# Column 4
 m4 <- feols(
-  ln_emp_pop ~ successful + non_us_t + int_l +
+  ln_emp_pop ~ successful + post + meventperyear + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
-    ww_firearm + ww_explo + ww_incend
-  | fips + year + month^year,
+    ww_firearm + ww_explo + ww_incend |
+    fips + year + month,
   cluster = ~fips, data = df_sub
 )
 
-# Column 5
 m5 <- feols(
-  ln_emp_pop ~ successful + non_us_t + int_l
-  | fips + year + div_9_all^year,
+  ln_emp_pop ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + month^year,
   cluster = ~fips, data = df_sub
 )
 
-# Column 6
 m6 <- feols(
-  ln_emp_pop ~ successful + non_us_t + int_l +
+  ln_emp_pop ~ successful + post + meventperyear + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
-    ww_firearm + ww_explo + ww_incend
-  | fips + year + div_9_all^year,
+    ww_firearm + ww_explo + ww_incend |
+    fips + month^year + div_9_all^year,
   cluster = ~fips, data = df_sub
 )
+
 
 # Panel B
-m1_B <- feols(ln_real_qp1_pop ~ post |
-                fips + year + month, cluster = ~fips, data = df_sub)
-m2_B <- feols(ln_real_qp1_pop ~ post + successful |
-                fips + year + month, cluster = ~fips, data = df_sub)
-m3_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l |
-                fips + year + month^year, cluster = ~fips, data = df_sub)
-m4_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l +
-                aa_assass + aa_armed + aa_bomb + aa_facility +
-                ww_firearm + ww_explo + ww_incend |
-                fips + year + month^year, cluster = ~fips, data = df_sub)
-m5_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l |
-                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
-m6_B <- feols(ln_real_qp1_pop ~ post + successful + non_us_t + int_l +
-                aa_assass + aa_armed + aa_bomb + aa_facility +
-                ww_firearm + ww_explo + ww_incend |
-                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
+m1_B <- feols(
+  ln_real_qp1_pop ~ post + meventperyear | fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m2_B <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear + non_us_t + int_l |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m3_B <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m4_B <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m5_B <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + month^year,
+  cluster = ~fips, data = df_sub
+)
+
+m6_B <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + month^year + div_9_all^year,
+  cluster = ~fips, data = df_sub
+)
+
 
 # Panel C
-m1_C <- feols(ln_real_qp1_job ~ post |
-                fips + year + month, cluster = ~fips, data = df_sub)
-m2_C <- feols(ln_real_qp1_job ~ post + successful |
-                fips + year + month, cluster = ~fips, data = df_sub)
-m3_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l |
-                fips + year + month^year, cluster = ~fips, data = df_sub)
-m4_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l +
-                aa_assass + aa_armed + aa_bomb + aa_facility +
-                ww_firearm + ww_explo + ww_incend |
-                fips + year + month^year, cluster = ~fips, data = df_sub)
-m5_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l |
-                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
-m6_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l +
-                aa_assass + aa_armed + aa_bomb + aa_facility +
-                ww_firearm + ww_explo + ww_incend |
-                fips + year + div_9_all^year, cluster = ~fips, data = df_sub)
+m1_C <- feols(
+  ln_real_qp1_job ~ post + meventperyear | fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m2_C <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear + non_us_t + int_l |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m3_C <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m4_C <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m5_C <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + month^year,
+  cluster = ~fips, data = df_sub
+)
+
+m6_C <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend |
+    fips + month^year + div_9_all^year,
+  cluster = ~fips, data = df_sub
+)
 
 ```
 
@@ -206,7 +255,7 @@ m6_C <- feols(ln_real_qp1_job ~ post + successful + non_us_t + int_l +
 dict_common <- c(
   post = "Post-attack",
   successful = "Successful attack",
-  meventperyear = "Number of attacks",
+  meventperyear = "Multiple events per year",
   non_us_t = "Non-US target",
   int_l = "International attack",
   aa_assass = "Assassination",
@@ -238,7 +287,7 @@ tab6A <- etable(list(m1, m2, m3, m4, m5, m6),
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
-       export = TRUE)
+       export = "data.frame")
 
 knitr::kable(tab6A, format = "pipe")
 
@@ -255,7 +304,7 @@ tab6B <- etable(list(m1_B, m2_B, m3_B, m4_B, m5_B, m6_B),
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
-       export = TRUE)
+       export = "data.frame")
 
 knitr::kable(tab6B, format = "pipe")
 
@@ -272,7 +321,7 @@ tab6C <- etable(list(m1_C, m2_C, m3_C, m4_C, m5_C, m6_C),
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
-       export = TRUE)
+       export = "data.frame")
 
 knitr::kable(tab6C, format = "pipe")
 
