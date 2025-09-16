@@ -1,0 +1,62 @@
+# Robin's Notebook
+
+This present document contain thought process throughout the task that I were given and accomplished.
+
+The tasks at hand revolves around the replication of part of the paper from Brodeur (2018) ([See the original article](https://www.aeaweb.org/articles?id=10.1257/app.20160556)). More specifically, reproducing *table 6*, *table 7* and the 8th column of *table 8*.
+
+Brodeur (2018) explore causal effects of terror attacks on employement and other channels that could affect local employement. Such channels include counter-terrorism expenditure, migration, human and physical capital, housing market and consumer and investement behavior. 
+
+The main method Brodeur (2018) used to investigate such effects is the Difference-in-Difference method. This method is also at the core of the table that needs to be replicated for the assessement.
+
+# Difference-in-Difference
+
+The difference-in-difference model can be summarized as the following: 
+
+$$
+Y_{i,t} = \mu + \gamma*D_i + \delta*Post_t + \tau(D_i * Post_t) + u_{i,t}
+$$
+
+where $i$ are units, $t$ are time periods, $D_i$ is the treated-control variable, $Post_t$ is the before-after variable and $D_i * Post_t$ is the treatment variable.
+
+Worth to mention is that $D_i$ and $Post_t$ shouldn't be correlated to $u_{i, t}$ (thus exogenous), as
+
+$$
+E[u_{i,t}|D_i, Post_t] = 0
+$$
+
+In Brodeur (2018), said equation look like the following,
+
+$$
+Y_{c,t} = \alpha + \eta * SUCESSFULL_{c,t} + \zeta * POST_{c,t} + \gamma * X'_{c, t} + \theta_c + \delta_t + \epsilon_{c,t}
+$$
+
+Where $SUCCESSFUL$ represent the treated-control variable, as such wether the terror-attackes failed or not. $POST$ represent the before-after variable and whether we're before or after a terror-attacks (successfully executed or failed). $X'_{c, t}$ represent cofounding factor, which should be time-variant as time-invariant factor get differenced out. $\theta_c$ represent the unit fixed-effect, the effect of the counties where the terror attack occured, while $\delta_t$ represent the time fixed-effect. $\epsilon_{c,t}$ is the error term.
+
+## Assumptions
+
+Difference-in-Difference model is constrained by multiple assumptions.
+First and foremost, since we're in the territory of the Potential Outcome Framework, the Stable Unit Treatment Value Assumption (SUTVA for short) is required.
+
+$$
+Y_i(d) = Y_i if D_i = d
+$$
+
+Essentially meaning that there should be no interference between units such that $Y_i(d_1, d_2, /dots, d_N) = Y_i(d_i)$ and that the variation between treatment is irrelevant.
+
+Secondly, an important and major assumption is the 'Parallel trends' assumption, indicating that both the potential outcome $Y_i(1)$ and $Y_i(0)$ should be parallel. Formally, this could be written as 
+
+$$
+E[Y_{i1}(0) - Y_{i0}(0)|D_i = 1] = E[Y_{i1}(0) - Y_{i0}(0)|D_i = 0]
+$$
+
+The difference-in-difference model is often extended to a regression model, particularly when modelling multiple time-period instead of just 2. Using a regression model in this fashion is similar to a Two-Way-Fixed-Effects model. Hence, the main assumption of 'Strict Exogeneity' of fixed-effects model holds, such that
+
+$$
+E[u_{i,t}|D_i,X_i,\alpha_i, \zeta_t] = 0
+$$
+
+in which $\alpha_i$ and $\zeta_t$ are unit and time-fixed effects respectively. 'Strict Exogeneity' is often implied if the Parallel Trend assumptions holds ([Chui et al (2025)](https://www.cambridge.org/core/journals/american-political-science-review/article/causal-panel-analysis-under-parallel-trends-lessons-from-a-large-reanalysis-study/219275E0CE901F099F2CFFBA07079243?utm_source=chatgpt.com)).
+
+## Reflection on Assumptions
+
+
