@@ -17,10 +17,12 @@ load("Brodeur (2018).RData")
 ```{r}
 #| include: false
 #| label: imports
-
 library(fixest)
-library(tidyverse)
+library(dplyr)
 library(etable)
+library(ggplot2)
+library(tidyr)
+library(plotly)
 ```
 
 # Difference-in-Difference
@@ -167,12 +169,74 @@ etable(fips_1009, fips_1043, fips_1055, fips_1073, fips_1081, fips_1097, fips_11
 
 ### Parallel Trend
 
+Find below plot of parellels trend for the different dependant variable investigated in table 7 of the article. Now before and after line is placed, since across all counties, terrors attacks every year.
+
+Nevertheless, across all time points, all 3 trends looks pretty parallels. This indicates that $D_i$ is likely not influenced by covariates.
+
+
+
 ```{r}
-ggplot(data = df %>% drop_na(), 
-       mapping = aes(y=ln_emp_pop,x=year, color=factor(successful)))+
-  geom_smooth(size=1, alpha = 0) +
-  guides(color = guide_legend(title = element_blank()))+
-  scale_color_manual(labels = c("Control", "Treatment"), 
-                     values = c("black", "brown"))+
-  theme_bw()
+# First, aggregate mean log_emp_pop by year & successful
+df_plot <- df %>%
+    group_by(year, successful) %>%
+    summarise(mean_ln_emp_pop = mean(ln_emp_pop, na.rm = TRUE), .groups = "drop") 
+
+
+p <- ggplot(df_plot, aes(x = year, y = mean_ln_emp_pop, color = factor(successful))) +
+    geom_line(size = 1) +
+    geom_point() +
+    scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("Not successful", "Successful")) +
+    labs(color = "Attack outcome",
+        y = "Mean log(emp/pop)",
+        x = "Year", 
+        title = "Parallel trends") +
+    theme_minimal()
+
+
+ggplotly(p)
+```
+
+```{r}
+# First, aggregate mean log_emp_pop by year & successful
+df_plot <- df %>%
+    group_by(year, successful) %>%
+    summarise(mean_ln_real_qp1_pop = mean(ln_real_qp1_pop, na.rm = TRUE), .groups = "drop") 
+
+
+p <- ggplot(df_plot, aes(x = year, y = mean_ln_real_qp1_pop, color = factor(successful))) +
+    geom_line(size = 1) +
+    geom_point() +
+    scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("Not successful", "Successful")) +
+    labs(color = "Attack outcome",
+        y = "Mean log(earning/pop)",
+        x = "Year",
+        title = "Parallel trends") +
+    theme_minimal()
+
+
+ggplotly(p)
+```
+
+```{r}
+# First, aggregate mean log_emp_pop by year & successful
+df_plot <- df %>%
+    group_by(year, successful) %>%
+    summarise(mean_ln_real_qp1_job = mean(ln_real_qp1_job, na.rm = TRUE), .groups = "drop") 
+
+
+p <- ggplot(df_plot, aes(x = year, y = mean_ln_real_qp1_job, color = factor(successful))) +
+    geom_line(size = 1) +
+    geom_point() +
+    scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("Not successful", "Successful")) +
+    labs(color = "Attack outcome",
+        y = "Mean log(earning/job)",
+        x = "Year",
+        title = "Parallel trends") +
+    theme_minimal()
+
+
+ggplotly(p)
 ```
