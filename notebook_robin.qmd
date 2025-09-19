@@ -1,0 +1,236 @@
+# Robin's Notebook
+
+This present document contain thought process throughout the task that I were given and accomplished.
+
+The tasks at hand revolves around the replication of part of the paper from Brodeur (2018) ([See the original article](https://www.aeaweb.org/articles?id=10.1257/app.20160556)). More specifically, reproducing *table 6*, *table 7* and the 8th column of *table 8*.
+
+Brodeur (2018) explore causal effects of terror attacks on employement and other channels that could affect local employement. Such channels include counter-terrorism expenditure, migration, human and physical capital, housing market and consumer and investement behavior.
+
+The main method Brodeur (2018) used to investigate such effects is the Difference-in-Difference method. This method is also at the core of the table that needs to be replicated for the assessement.
+
+```{r}
+#| include: false
+#| label: load data
+load("Brodeur (2018).RData")
+```
+
+```{r}
+#| include: false
+#| label: imports
+library(fixest)
+library(dplyr)
+library(etable)
+library(ggplot2)
+library(tidyr)
+library(plotly)
+```
+
+# Difference-in-Difference
+
+The difference-in-difference model can be summarized as the following:
+
+$$
+Y_{i,t} = \mu + \gamma*D_i + \delta*Post_t + \tau(D_i * Post_t) + u_{i,t}
+$$
+
+where $i$ are units, $t$ are time periods, $D_i$ is the treated-control variable, $Post_t$ is the before-after variable and $D_i * Post_t$ is the treatment variable.
+
+Worth to mention is that $D_i$ and $Post_t$ shouldn't be correlated to $u_{i, t}$ (thus exogenous), as
+
+$$
+E[u_{i,t}|D_i, Post_t] = 0
+$$
+
+In Brodeur (2018), said equation look like the following,
+
+$$
+Y_{c,t} = \alpha + \eta * SUCESSFULL_{c,t} + \zeta * POST_{c,t} + \gamma * X'_{c, t} + \theta_c + \delta_t + \epsilon_{c,t}
+$$
+
+Where $SUCCESSFUL$ represent the treated-control variable, as such wether the terror-attackes failed or not. $POST$ represent the before-after variable and whether we're before or after a terror-attacks (successfully executed or failed). $X'_{c, t}$ represent cofounding factor, which should be time-variant as time-invariant factor get differenced out. $\theta_c$ represent the unit fixed-effect, the effect of the counties where the terror attack occured, while $\delta_t$ represent the time fixed-effect. $\epsilon_{c,t}$ is the error term.
+
+## Assumptions
+
+Difference-in-Difference model is constrained by multiple assumptions. First and foremost, since we're in the territory of the Potential Outcome Framework, the Stable Unit Treatment Value Assumption (SUTVA for short) is required.
+
+$$
+Y_i(d) = Y_i if D_i = d
+$$
+
+Essentially meaning that there should be no interference between units such that $Y_i(d_1, d_2, /dots, d_N) = Y_i(d_i)$ and that the variation between treatment is irrelevant.
+
+Secondly, an important and major assumption is the 'Parallel trends' assumption, indicating that both the potential outcome $Y_i(1)$ and $Y_i(0)$ should be parallel. Formally, this could be written as
+
+$$
+E[Y_{i1}(0) - Y_{i0}(0)|D_i = 1] = E[Y_{i1}(0) - Y_{i0}(0)|D_i = 0]
+$$
+
+The difference-in-difference model is often extended to a regression model, particularly when modelling multiple time-period instead of just 2. Using a regression model in this fashion is similar to a Two-Way-Fixed-Effects model. Hence, the main assumption of 'Strict Exogeneity' of fixed-effects model holds, such that
+
+$$
+E[u_{i,t}|D_i,X_i,\alpha_i, \zeta_t] = 0
+$$
+
+in which $\alpha_i$ and $\zeta_t$ are unit and time-fixed effects respectively. 'Strict Exogeneity' is often implied if the Parallel Trend assumptions holds ([Chui et al (2025)](https://www.cambridge.org/core/journals/american-political-science-review/article/causal-panel-analysis-under-parallel-trends-lessons-from-a-large-reanalysis-study/219275E0CE901F099F2CFFBA07079243?utm_source=chatgpt.com)).
+
+## Reflection on Assumptions
+
+### SUTVA - Spill-Over
+
+The SUTVA assumes that the potential outcome $Y_i$ (employement rate) of a non-targetted country is not influenced by the treatment condition (wether terror-attack succeeded or not). In order words, there is no counties-effect or spill-over influence of an attacked counties to other counties. According to the paper, the effect of the `SUCCESS` and `POST` variable on the log of the county-year ratio of jobs-to-population is not significant, even after accounting for Year, Month and County FE, as well as Weapon and Type Attack FE's.
+
+#REMARKS: `log_emp_pop` does not equal the sum of all other log employement per capita for the 6 other industries. It's not even equal to the mean of all industries employement rate either
+
+```{r}
+ln_emp_pop_sum <- df %>% 
+    select(contains("emp"), -ln_emp_pop) %>% 
+    mutate(ln_emp_pop_sum = ln_emp_manu_pop  + ln_emp_const_pop + ln_emp_whole_pop + ln_emp_retail_pop + ln_emp_services_pop + ln_emp_finance_pop) %>% 
+    select(ln_emp_pop_sum)
+
+print(head(cbind(ln_emp_pop_sum, df %>% select(ln_emp_pop))))
+```
+
+```{r}
+ln_emp_pop_mean <- df %>% 
+    select(contains("emp"), -ln_emp_pop) %>% 
+    mutate(ln_emp_pop_mean = (ln_emp_manu_pop  + ln_emp_const_pop + ln_emp_whole_pop + ln_emp_retail_pop + ln_emp_services_pop + ln_emp_finance_pop) / 6) %>% 
+    select(ln_emp_pop_mean)
+
+print(head(cbind(ln_emp_pop_mean, df %>% select(ln_emp_pop))))
+```
+
+Before going for the analysis, some preprocessing needs to be done, as predictor employement rate of non-attacked countries using the `SUCESS`, `POST` and fixed-effects values from the attacked counties posed some issues. We'll consider neighboring counties counties of the same state.
+
+```{r}
+# Get the state code from the fips code
+get_state_code <- function(fips){
+   string_fips = as.character(fips)
+    if (nchar(string_fips) == 4){
+        state_code = paste0("0", substr(string_fips, 1, 1))
+    }
+    else{
+        state_code = substr(string_fips, 1, 2)
+    }
+    return(state_code)    
+}
+
+# One-hot encode counties so that county A = 1, while the rest = 0
+one_hot <- function(ohot_var = "fips"){
+    ohot_fips = model.matrix(~0+df_statecode[[ohot_var]])
+    colnames(ohot_fips) = paste0("fips_", levels(df_statecode[ohot_var]))
+    return(ohot_fips)
+}
+
+# Add the state code to the original data.frame
+df_statecode <- df %>% 
+    mutate(
+        state_code = sapply(fips, get_state_code),
+        state_code = as.factor(state_code))
+
+```
+
+Model example using the state of Arizona (01), county 1009 against neibhors. As we can see, there is no interaction effect between the treatment variable `SUCESS` and whether the county is targetted or non-targetted (neighbors). Hence, for this particular case, there is to be no spill-over effects and the SUTVA is respected.
+
+```{r}
+code = "01"
+by_statecode <- df_statecode[df_statecode$state_code == code,]
+by_statecode$fips <- as.factor(by_statecode$fips)
+ohot_fips = model.matrix(~0+by_statecode$fips)
+colnames(ohot_fips) = paste0("fips_", levels(by_statecode$fips))
+ohotted_df <- cbind(by_statecode, ohot_fips)
+
+gen_ind <- feols(fml = ln_emp_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+manu_ind <- feols(fml = ln_emp_manu_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+const_ind <- feols(fml = ln_emp_const_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+whole_ind <- feols(fml = ln_emp_whole_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+retail_ind <- feols(fml = ln_emp_retail_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+services_ind <- feols(fml = ln_emp_services_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+finance_ind <- feols(fml = ln_emp_finance_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+
+etable(gen_ind, manu_ind, const_ind, whole_ind, retail_ind, services_ind, finance_ind)
+```
+
+Now, let's see wether we get a significant interaction result by analysis the whole state of Arizone (01) for every counties. There is no significant interaction effect between the SUCESS treatment variable for every pair of targetted-neighbor counties of Arizona, except for county 1055.
+
+```{r}
+fips_1009 <- feols(fml = ln_emp_pop ~ successful + post + fips_1009 + successful*fips_1009|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1043 <- feols(fml = ln_emp_pop ~ successful + post + fips_1043 + successful*fips_1043|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1055 <- feols(fml = ln_emp_pop ~ successful + post + fips_1055 + successful*fips_1055|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1073 <- feols(fml = ln_emp_pop ~ successful + post + fips_1073 + successful*fips_1073|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1081 <- feols(fml = ln_emp_pop ~ successful + post + fips_1081 + successful*fips_1081|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1097 <- feols(fml = ln_emp_pop ~ successful + post + fips_1097 + successful*fips_1097|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1101 <- feols(fml = ln_emp_pop ~ successful + post + fips_1125 + successful*fips_1101|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1103 <- feols(fml = ln_emp_pop ~ successful + post + fips_1103 + successful*fips_1103|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1115 <- feols(fml = ln_emp_pop ~ successful + post + fips_1115 + successful*fips_1115|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+fips_1125 <- feols(fml = ln_emp_pop ~ successful + post + fips_1125 + successful*fips_1125|year + aa_assass + aa_armed + aa_bomb + aa_facility + ww_firearm + ww_explo + ww_incend,data = ohotted_df)
+
+etable(fips_1009, fips_1043, fips_1055, fips_1073, fips_1081, fips_1097, fips_1101, fips_1103, fips_1115, fips_1125)
+```
+
+### Parallel Trend
+
+```{r}
+# First, aggregate mean log_emp_pop by year & successful
+df_plot <- df %>%
+    group_by(year, successful) %>%
+    summarise(mean_ln_emp_pop = mean(ln_emp_pop, na.rm = TRUE), .groups = "drop") 
+
+
+p <- ggplot(df_plot, aes(x = year, y = mean_ln_emp_pop, color = factor(successful))) +
+    geom_line(size = 1) +
+    geom_point() +
+    scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("Not successful", "Successful")) +
+    labs(color = "Attack outcome",
+        y = "Mean log(emp/pop)",
+        x = "Year", 
+        title = "Parallel trends") +
+    theme_minimal()
+
+
+ggplotly(p)
+```
+
+```{r}
+# First, aggregate mean log_emp_pop by year & successful
+df_plot <- df %>%
+    group_by(year, successful) %>%
+    summarise(mean_ln_real_qp1_pop = mean(ln_real_qp1_pop, na.rm = TRUE), .groups = "drop") 
+
+
+p <- ggplot(df_plot, aes(x = year, y = mean_ln_real_qp1_pop, color = factor(successful))) +
+    geom_line(size = 1) +
+    geom_point() +
+    scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("Not successful", "Successful")) +
+    labs(color = "Attack outcome",
+        y = "Mean log(earning/pop)",
+        x = "Year",
+        title = "Parallel trends") +
+    theme_minimal()
+
+
+ggplotly(p)
+```
+
+```{r}
+# First, aggregate mean log_emp_pop by year & successful
+df_plot <- df %>%
+    group_by(year, successful) %>%
+    summarise(mean_ln_real_qp1_job = mean(ln_real_qp1_job, na.rm = TRUE), .groups = "drop") 
+
+
+p <- ggplot(df_plot, aes(x = year, y = mean_ln_real_qp1_job, color = factor(successful))) +
+    geom_line(size = 1) +
+    geom_point() +
+    scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("Not successful", "Successful")) +
+    labs(color = "Attack outcome",
+        y = "Mean log(earning/job)",
+        x = "Year",
+        title = "Parallel trends") +
+    theme_minimal()
+
+
+ggplotly(p)
+```
