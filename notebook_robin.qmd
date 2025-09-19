@@ -173,8 +173,6 @@ Find below plot of parellels trend for the different dependant variable investig
 
 Nevertheless, across all time points, all 3 trends looks pretty parallels. This indicates that $D_i$ is likely not influenced by covariates.
 
-
-
 ```{r}
 # First, aggregate mean log_emp_pop by year & successful
 df_plot <- df %>%
@@ -183,7 +181,7 @@ df_plot <- df %>%
 
 
 p <- ggplot(df_plot, aes(x = year, y = mean_ln_emp_pop, color = factor(successful))) +
-    geom_line(size = 1) +
+    geom_line(linewidth = 1) +
     geom_point() +
     scale_color_manual(values = c("0" = "blue", "1" = "red"),
                      labels = c("Not successful", "Successful")) +
@@ -205,7 +203,7 @@ df_plot <- df %>%
 
 
 p <- ggplot(df_plot, aes(x = year, y = mean_ln_real_qp1_pop, color = factor(successful))) +
-    geom_line(size = 1) +
+    geom_line(linewidth = 1) +
     geom_point() +
     scale_color_manual(values = c("0" = "blue", "1" = "red"),
                      labels = c("Not successful", "Successful")) +
@@ -227,7 +225,7 @@ df_plot <- df %>%
 
 
 p <- ggplot(df_plot, aes(x = year, y = mean_ln_real_qp1_job, color = factor(successful))) +
-    geom_line(size = 1) +
+    geom_line(linewidth = 1) +
     geom_point() +
     scale_color_manual(values = c("0" = "blue", "1" = "red"),
                      labels = c("Not successful", "Successful")) +
