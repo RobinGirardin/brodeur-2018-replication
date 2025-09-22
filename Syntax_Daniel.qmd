@@ -3,7 +3,7 @@ title: "Brodeur-2018"
 format: html
 ---
 
-## Dani Script for Brodeur 2018 replication
+## Libraries and data loading
 
 Load libraries.
 
@@ -14,6 +14,8 @@ Load libraries.
 library(tidyverse)
 library(fixest)
 library(knitr)
+library(htmltools)
+
 ```
 
 Load data.
@@ -35,8 +37,8 @@ Check data (in Console) and open variable_table
 str(df)
 glimpse(df)
 summary(df)
-View(variable_table)
-View(df)
+# View(variable_table)
+# View(df)
 df %>%
   summarise(
     n_years = n_distinct(year),
@@ -45,53 +47,47 @@ df %>%
 
 ```
 
-Try to replicate Figure 1
+## Replication of Figure 1
 
 ```{r}
 #| label: figure1
 
-# Identify transition from 0 to 1 with lag()
-transition_data <- df %>%
-  select(fips, year, successful, successful1, post, meventperyear) %>% 
+# identify years with attack(s) within fips
+attack_years <- df %>%
+  arrange(fips, year) %>%
   group_by(fips) %>%
   mutate(
-    post = as.numeric(post),  # converts labelled to numeric
-    post_lead = lead(post),
-    transition = (!is.na(post_lead) & post == 0 & post_lead == 1)
-    # TRUE the year before post changes from 0 to 1
+    lead_post      = dplyr::lead(post),
+    is_attack_year = (post == 0) & (lead_post == 1)
   ) %>%
-  filter(transition == TRUE) %>%  # only rows with transitions (Jahr VOR dem Übergang)
-  ungroup() %>% 
-  mutate(successful_all = successful1 * meventperyear)
+  ungroup() %>%
+  filter(is_attack_year)
 
-# Table with years, grouped by successful1
-yearly_table <- transition_data %>%
+# number of events
+yearly_table <- attack_years %>%
   group_by(year, successful1) %>%
-  summarise(
-    count_events = case_when(
-      successful1[1] == 0 ~ n(),
-      successful1[1] == 1 ~ sum(successful_all, na.rm = TRUE)),
-    .groups = 'drop')
+  summarise(count_events = sum(meventperyear), na.rm = TRUE, .groups = "drop") %>%
+  # for ggplot color scale
+  mutate(successful1 = as.character(successful1)) %>%
+  arrange(year, successful1)
 
-# yearly_table %>% 
-  # group_by(successful1) %>% 
-  # summarise(sum_events = sum(count_events))
-
-# Make the plot
+# the plot
 ggplot(yearly_table, aes(x = year, y = count_events, color = factor(successful1))) +
   geom_line(linewidth = 1) +
   geom_point(size = 1.5) +
   scale_color_manual(
     values = c("0" = "#2ECC71", "1" = "#E74C3C"),
     labels = c("0" = "failed", "1" = "successful"),
-    breaks = c("1", "0")) +
+    breaks = c("1", "0")
+  ) +
   scale_y_continuous(limits = c(0, NA)) +
   labs(
     title = "Figure 1: Number of counties with successful or failed attacks",
     x = "Jahr",
     y = "Number of counties",
     color = "Attack",
-    caption = "Brodeur 2018: his Figure 1 is similar but with different numbers") +
+    caption = "Brodeur 2018: his Figure 1 is similar but with different numbers"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(size = 12, hjust = 0.5),
@@ -99,12 +95,11 @@ ggplot(yearly_table, aes(x = year, y = count_events, color = factor(successful1)
     legend.position = "bottom"
   )
 
-
 ```
 
-Replication of table 6:
+## Replication of table 6
 
-Create the models
+### Create the models
 
 ```{r}
 #| label: table6Models
@@ -246,7 +241,7 @@ m6_C <- feols(
 
 ```
 
-## Create the table 6
+### Create table 6
 
 ```{r}
 #| label: table6Commons
@@ -276,7 +271,7 @@ order_common <- c(
 
 ```
 
-### Table 1, Panel A: Employment (ln_emp_pop)
+#### Table 6, Panel A: Employment (ln_emp_pop)
 
 ```{r}
 #| label: Table6PanelA
@@ -286,14 +281,15 @@ tab6A <- etable(list(m1, m2, m3, m4, m5, m6),
        se.below = TRUE,
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
-       drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
-       export = "data.frame")
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
+## for rendering: knitr...  for interactive: html_print...
 knitr::kable(tab6A, format = "pipe")
+# html_print(HTML(kable(tab6A, "html")))
 
 ```
 
-### Table 1, Panel B: Earnings (ln_real_qp1_pop)
+#### Table 6, Panel B: Earnings (ln_real_qp1_pop)
 
 ```{r}
 #| label: Table6PanelB
@@ -303,14 +299,15 @@ tab6B <- etable(list(m1_B, m2_B, m3_B, m4_B, m5_B, m6_B),
        se.below = TRUE,
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
-       drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
-       export = "data.frame")
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
+## for rendering: knitr...  for interactive: html_print...
 knitr::kable(tab6B, format = "pipe")
+# html_print(HTML(kable(tab6B, "html")))
 
 ```
 
-### Table 1, Panel C: Wages (ln_real_qp1_job)
+#### Table 6, Panel C: Wages (ln_real_qp1_job)
 
 ```{r}
 #| label: Table6PanelC
@@ -320,9 +317,10 @@ tab6C <- etable(list(m1_C, m2_C, m3_C, m4_C, m5_C, m6_C),
        se.below = TRUE,
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
-       drop = "Intercept", fitstat = ~n + r2, tex = FALSE,
-       export = "data.frame")
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
+## for rendering: knitr...  for interactive: html_print...
 knitr::kable(tab6C, format = "pipe")
+# html_print(HTML(kable(tab6C, "html")))
 
 ```
