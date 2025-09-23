@@ -123,8 +123,7 @@ m6A2 <- feols(
 
 m6A3 <- feols(
   ln_emp_pop ~ successful + post + meventperyear |
-    fips + year + month + non_us_t + int_l +
-    aa_assass + aa_armed + aa_bomb + aa_facility,
+    fips + year + month + non_us_t + int_l,
   cluster = ~fips, data = df_sub
 )
 
@@ -168,8 +167,7 @@ m6B2 <- feols(
 
 m6B3 <- feols(
   ln_real_qp1_pop ~ successful + post + meventperyear |
-    fips + year + month + non_us_t + int_l +
-    aa_assass + aa_armed + aa_bomb + aa_facility,
+    fips + year + month + non_us_t + int_l,
   cluster = ~fips, data = df_sub
 )
 
@@ -213,8 +211,7 @@ m6C2 <- feols(
 
 m6C3 <- feols(
   ln_real_qp1_job ~ successful + post + meventperyear |
-    fips + year + month + non_us_t + int_l +
-    aa_assass + aa_armed + aa_bomb + aa_facility,
+    fips + year + month + non_us_t + int_l,
   cluster = ~fips, data = df_sub
 )
 
@@ -247,7 +244,7 @@ m6C6 <- feols(
 ### Create table 6
 
 ```{r}
-#| label: table6Commons
+#| label: tableCommons
 
 # define common table properties
 dict_common <- c(
