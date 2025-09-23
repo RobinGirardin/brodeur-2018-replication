@@ -430,15 +430,15 @@ m7B6 <- feols(
 #| label: Table7PanelA
 #| message: false
 
-tab6A <- etable(list(m7A1, m7A2, m7A3, m7A4, m7A5, m7A6),
+tab7A <- etable(list(m7A1, m7A2, m7A3, m7A4, m7A5, m7A6),
        se.below = TRUE,
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab6A, format = "pipe")
-html_print(HTML(kable(tab6A, "html")))
+# knitr::kable(tab7A, format = "pipe")
+html_print(HTML(kable(tab7A, "html")))
 
 ```
 
@@ -448,14 +448,94 @@ html_print(HTML(kable(tab6A, "html")))
 #| label: Table7PanelB
 #| message: false
 
-tab6A <- etable(list(m7B1, m7B2, m7B3, m7B4, m7B5, m7B6),
+tab7B <- etable(list(m7B1, m7B2, m7B3, m7B4, m7B5, m7B6),
        se.below = TRUE,
        signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
        dict = dict_common, order = order_common, digits = 3,
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab6A, format = "pipe")
-html_print(HTML(kable(tab6A, "html")))
+# knitr::kable(tab7B, format = "pipe")
+html_print(HTML(kable(tab7B, "html")))
+
+```
+
+## Replication of table 8
+
+### Create the models
+
+First we have to calculate the ln of the housing index (assuming the variable in the data is the plain index).
+
+```{r}
+#| label: table8Models
+#| message: false
+
+df_sub <- df %>%
+  filter(!is.na(successful)) %>% 
+  mutate(ln_hh_index = 100 * log(housing_index))
+
+# Panel A – Brodeur Table 6
+m8A1 <- feols(
+  ln_hh_index ~ post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m8A2 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m8A3 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l,
+  cluster = ~fips, data = df_sub
+)
+
+m8A4 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m8A5 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + month^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m8A6 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + month^year + div_9_all^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+
+```
+
+### Create table 8
+
+#### Table 8, Panel A: ln(house price index)
+
+```{r}
+#| label: Table8PanelA
+#| message: false
+
+tab8A <- etable(list(m8A1, m8A2, m8A3, m8A4, m8A5, m8A6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+# knitr::kable(tab8A, format = "pipe")
+html_print(HTML(kable(tab8A, "html")))
 
 ```
