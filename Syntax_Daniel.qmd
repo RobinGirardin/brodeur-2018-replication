@@ -540,7 +540,7 @@ html_print(HTML(kable(tab8A, "html")))
 
 ```
 
-## Trial to check parallel trend assumption
+## Check parallel trend assumption
 
 Define year of attack (failed or successful)
 
@@ -567,7 +567,6 @@ df_es <- df %>%
 df_es_win <- df_es %>% filter(event_time >= -3, event_time <= 3)
 
 ```
-
 
 Plot to check parallel trend assumption
 
@@ -600,3 +599,9 @@ iplot(es_mod,
 #   theme_minimal()
 
 ```
+
+### Interpretation
+
+The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
+
+Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
