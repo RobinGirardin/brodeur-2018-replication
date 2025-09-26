@@ -25,5 +25,3 @@ _cache/
 # System-Dateien
 .DS_Store
 Thumbs.db
-
-/.quarto/
