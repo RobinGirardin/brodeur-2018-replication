@@ -540,9 +540,36 @@ html_print(HTML(kable(tab8A, "html")))
 
 ```
 
-## Check parallel trend assumption
+## Check assumptions
 
-Define year of attack (failed or successful)
+### How Brodeur addressed the assumptions
+
+**SUTVA / Spillovers**\
+- Tests for spillover effects by aggregating to broader Census regions (9 divisions).\
+- Finds no significant effects at the regional level → evidence against major spillovers.
+
+**Parallel trends assumption (see our check further down)**\
+- Event-study analysis with leads (pre-attack years).\
+- Pre-coefficients ≈ 0 and statistically insignificant → supports parallel trends.
+
+**No anticipation effects**\
+- Design compares successful vs. failed attacks.\
+- Since both types of counties experience an attack attempt, and success/failure is only known after the event, anticipation is unlikely to differ systematically between groups.\
+- Event-study shows no divergence in pre-periods, reinforcing that anticipation is not a concern.
+
+**No compositional changes**\
+- Counties are defined by fixed FIPS codes → no boundary changes.\
+- Migration or firm exit would be part of the causal mechanism, not a threat to identification.\
+- Robustness checks: restrict sample to counties with a single attack, exclude multiple-event years, etc.
+
+**Common shocks**\
+- Includes year fixed effects (absorbing nationwide shocks such as recessions) and month fixed effects (seasonality).\
+- County fixed effects absorb time-invariant county heterogeneity.\
+- Together these control for common macro shocks.
+
+### Our check of the parallel trend assumption
+
+#### Define year of attack (failed or successful)
 
 ```{r}
 #| label: Year of event
@@ -568,7 +595,7 @@ df_es_win <- df_es %>% filter(event_time >= -3, event_time <= 3)
 
 ```
 
-Plot to check parallel trend assumption
+#### Plot to check parallel trend assumption
 
 ```{r}
 #| label: iPlot
@@ -600,7 +627,7 @@ iplot(es_mod,
 
 ```
 
-### Interpretation
+#### Interpretation
 
 The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
 
