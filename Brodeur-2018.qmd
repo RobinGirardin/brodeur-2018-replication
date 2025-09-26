@@ -2,11 +2,138 @@
 title: "Brodeur-2018"
 ---
 
-## Empty Quarto book
+# Motivation 
 
-Where we will put our consolidated scripts.
+The motivation section responds to the following questions: 
 
-```{r}
+* Why is the research question relevant?
+* What are the main hypothesis?
+
+First, the research question is relevant because understanding the impact of terror attacks on employement isn't well established.
+Indeed, the data available to answer such question (subnational data) has only been collected in the recent years.
+Secondly,  The difficult of the topic as well as the different channels make answering this question challenging and no consensus has been established yet.
+According to Mill (1848), nations should recover question when the direct impact on productive capital isn't substantial,
+while Becker and Murphy (2001) argues that the uncertainty about futur terror attacks makes their effect hard to estimate.
+
+Thirdly and most importantly, (percieved) costs of terror attacks are huge.
+Understand such impacts would benefit countries where terror attacks are proeminent,
+such as the United States of America, where the paper has been conducted.
+
+More specifically, the paper investigates the direct impact of terror attacks on employement trough
+* Employement rate,
+  - General, through "100 x Log Employment (per capita)"
+  - Industry-wise, trough
+    * 100 x Log Manufacturing Employment (per capita)
+    * 100 x Log Construction Employment (per capita)
+    * 100 x Log Retail Employment (per capita)
+    * 100 x Log Wholesale Employment (per capita)
+    * 100 x Log Services Employment (per capita)
+    * 100 x Log Finance Employment (per capita)
+* Earning (locall, at the country scale), through
+  - 100 x Log Real Earnings (per capita)
+  - 100 x Log Real Earnings per Job
+
+as well as through potential channels, such as 
+* Destruciton of human and physiacal capital
+* Consumer and investment behavior
+* Housing Market
+* Migration
+* Counterterrorism expenditures
 
 
-```
+
+## Answers:
+1. Difficult topic, no consensus yet and interesting application prospects for states and country.
+
+**2. Hypothesis**
+
+Effects of TA on local employement is ambiguous to the many channels at work.
+
+We expect an effect of terror attacks (TA) on human and physical capital, as most TA are of small scale.
+
+We expect an effect of TA on consumer and investement behavior, through increased uncertainty.
+
+We expect an effect of TA on the housing market, as a decrease of housing prices following a TA is well-documented.
+
+We expect an effect of TA on migration, as a TA worsen individual's living and working conditions.
+
+We expect an small effect of TA on counterterrorism expenditures, through moving ressources from productive sector to undproductive sector (security,...).
+Additionally, as counterterrorism expenditures are generaly at the federal and regional level, is it unclear if local (county) economy would affected would affected.
+
+# Data sources
+
+This section responds to the following question: 
+
+* Where does the data come from (country, time period, source).
+* What are the key variables?
+* How are those variable measured?
+
+First important source is the Global Terrorism Database (2017), firstly established a counselling company, Pinkerton Global Intelligence Services, and now maintained by 
+the National Consortium for the Study of Terrorism and Responses to Terrorism (START).
+Time period is 1970 to 2013. 1993 is missing because the box of data fell out of a truck during transit.
+Information sources are media articles, electronics news archive, and other existing datasets.
+Variable measurement is unkown, probably 'manual'.
+Main variables are 
+  - date,
+  - location (at the county level)
+  - description of each terror attack, allowing for cross-matching with other dataset with other datasets
+  - attack type (governement buildings, businesses, ...)
+  - weapons type (biological, explosives, incendiary, ...)
+  - number of deaths
+  - number of injured people
+  - property dammage
+
+**Note**, the SUCESSFULL variable was constructed using this dataset
+
+Second important dataset is Country Business Patterns (CBD) datasets, coming form the Business Register, maintained by the US Census Bureau.
+Time period is 1970 to 2013.
+Information sources is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firm is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firms.
+Variable measurement is then admininstrative or survey.
+Main variables are:
+  - number of establishements
+  - establishement location
+  - employement during the middle of March
+  - quarter payroll
+  - annual payroll
+
+**Note**, Governement, military employement, rail transportation, household employement industries are present.
+
+An additionnal datasets was used to compare finding and test their robustness, the Bureau of Economic Analysis (BEA).
+Main Variables:
+- Number of jobs in a country
+
+Governement and military employement were added to facility comparison.
+
+**Note** unpaid family workers and volunteers are counted.
+
+# Method
+
+This section responds to the following questions:
+
+* What are teh assumptions of the method
+* Are those assumptions plausible in this example?
+
+The targetted analysis of the project is the Difference-in-Difference Method.
+This method has the following assumptions: 
+
+1. Stable Unit Treatment Value Assumption (SUTVA)
+2. Parallel Trend Assumption
+3. (Strict Exogeneity), which is often implies the *2.* holds.
+
+# Descriptive Statistics
+
+# Results
+
+This section responds to the following questions:
+
+* What are the main results
+* Are they plausible?
+* How robust the result are to changing samples?
+
+# Conclusion
+
+This section responds to the following questions:
+
+* How do you replication results copamre to the results of the research paper?
+* Are there similar studies and how do your results
+compare to these results?
