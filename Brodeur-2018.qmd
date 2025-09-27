@@ -275,16 +275,30 @@ Sucessful TA reduce employement by 2%, effect statistically significant at the 5
 Variable such as 'non-american' target and 'logistically international',
 as well as another variable absorbing employement shocks are statistically significant at the 5% level.
 
+#### Plausibility
+
+There is a significant negative effect of successfulness of an attack on job/capita.
+The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimateThe standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate.
 ### Earnings per capita
 
 Dependent variable: 100 * log(earnings/capita)
 
 SUCCESSFUL has an effect at conventional level (10%). Hence, debatable.
 
+#### Plausibility
+
+10% significance levels is small. However, standard errors are half as big as the estimates, indicating that the estimates is relatively close to the true SUCCESSFUL estimates.
+
 ### Earnings per jobs
 
 No effect at the 10% levels, hence 'effect' of aggregated earnings but not per jobs.
 Could there be a covariate explaining this?
+
+#### Plausibility 
+
+A significant effect on the 10% level is debatable.
+Additionnaly, the effect on aggregated earnings but not per job means there is likely a covariate involved.
+Hence the result aren't really plausible.
 
 # Conclusion
 
