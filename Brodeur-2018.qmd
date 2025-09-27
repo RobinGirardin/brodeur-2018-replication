@@ -117,8 +117,100 @@ The targetted analysis of the project is the Difference-in-Difference Method.
 This method has the following assumptions: 
 
 1. Stable Unit Treatment Value Assumption (SUTVA)
-2. Parallel Trend Assumption
-3. (Strict Exogeneity), which is often implies the *2.* holds.
+2. Treatment randomness assignement
+3. Parallel Trend Assumption
+4. Exogeneity, which is often implies the *3.* holds.
+
+## SUTVA
+
+Bordeur tests for spillover effects by aggregating to broader Census regions (9 divisions).
+'Division' is not a cofounder for employement rate and SUCCESSFUL
+
+Additionnaly, he tests local spill-over effects by testing the effects of the successfull TA on neighboring counties.
+He found neglibile and idiosyncratic effects, hence this assumption is respected.
+
+## Treatment randomness assignement
+
+Is the successfulness of an attack predictable or can we anticipate it?
+This is likely not the case since the sample of county-year observation hosting successful and failed terror
+are balanced across a void range of characteristics.
+
+Additionnaly, given a particular location, the successfulness or failure of a TA can be considered random.
+
+**Remark**, this link back to the Parallel Trend Assumption
+
+## Parallel Trend Assumption
+
+```{r}
+#| label: Year of event
+
+# Step 1: Get the event year (first 0->1 edge in post) and success status for each county.
+ev_info <- df %>%
+  arrange(fips, year) %>%
+  group_by(fips) %>%
+  mutate(is_event_year = (post == 0) & lead(post) == 1) %>%
+  summarise(
+    event_year  = if (any(is_event_year, na.rm = TRUE)) min(year[is_event_year],
+                                                 na.rm = TRUE) else NA_integer_,
+    is_success  = if (any(is_event_year, na.rm = TRUE)) as.integer(any(
+         successful1[is_event_year] == 1, na.rm = TRUE)) else NA_integer_) %>%
+  ungroup()
+
+df_es <- df %>%
+  left_join(ev_info, by = "fips") %>%
+  filter(!is.na(event_year)) %>%  # keep only fips with an event
+  mutate(event_time = year - event_year)
+
+df_es_win <- df_es %>% filter(event_time >= -3, event_time <= 3)
+
+```
+
+#### Plot to check parallel trend assumption
+
+```{r}
+#| label: iPlot
+#| message: false
+
+es_mod <- feols(
+  ln_emp_pop ~ i(event_time, is_success, ref = -1) | fips + year,
+  cluster = ~ fips,
+  data = df_es_win)
+
+iplot(es_mod,
+      main = "Event study (successful vs failed): parallel-trend check",
+      xlab = "Years relative to event (ref = -1)",
+      ref.line = 0)
+      
+# tidy_es <- broom::tidy(es_mod, conf.int = TRUE) %>%
+#   filter(str_detect(term, "^event_time::")) %>%
+#   mutate(event_time = as.numeric(str_match(term, "event_time::(-?\\d+)")[,2]))
+
+# 
+# ggplot(tidy_es, aes(event_time, estimate)) +
+#   geom_hline(yintercept = 0, linetype = "dashed", color = "grey50") +
+#   geom_point() +
+#   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = .2) +
+#   labs(title = "Event study (successful − failed): parallel-trend check",
+#        x = "Years relative to event (ref = −1)",
+#        y = "Diff-in-diff effect on ln_emp_pop") +
+#   theme_minimal()
+
+```
+
+#### Interpretation
+
+The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
+
+Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
+
+## Exogeneity
+
+Brodeur includes year fixed effects (absorbing nationwide shocks such as recessions) and month fixed effects (seasonality)
+He also includes county fixed effects absorbing time-invariant county heterogeneity.
+Together, these control for common macro shocks.
+
+He also add condition the analysis on common possible covariate to avoid cofounder effects, such as 
+the attack type of the weapon type.
 
 # Descriptive Statistics
 
@@ -129,6 +221,70 @@ This section responds to the following questions:
 * What are the main results
 * Are they plausible?
 * How robust the result are to changing samples?
+
+## Result of the basic model:
+
+**log(job/pop) ~ SUCCESS + n_attacks | year+month+county:**
+
+The first important information is that effect of fixed-effects variable are not significant.
+There is a significant dip of 1% after a TA on job/population.
+Such effect is significant for first 2 years following a TA.
+
+**log(job/pop) ~ SUCCESS + n_attacks + attack_type + weapon_type | year + month + county:**
+
+
+No real change from the previous model without attack type and weapon type.
+Drop of log(job/(population)) between 0.9 to 1.4%
+
+**log(real earning per capita) ~SUCCESS + n_attacks + attack_type + weapon_type | year + month + county**
+
+Estimates are positives before the attacks and negative after, droping by 1 to 3%.
+Those effects are significant at the 1% level.
+
+## Difference-in-Difference Model
+
+$$
+Y_{c,t} = \alpha + \eta * SUCESSFULL_{c,t} + \zeta * POST_{c,t} + \gamma * X'_{c, t} + \theta_c + \delta_t + \epsilon_{c,t}
+$$
+
+Dependant variable is $100 * log(job/capita)$
+
+### Job/capita
+
+**First Model**
+
+$$
+Y_{c,t} = \alpha + \eta + \zeta * POST_{c,t} + \theta_c + \delta_t + \epsilon_{c,t}
+$$
+
+Significant effect of $POST$ at the 1% significant level.
+This suggest that the attemps of an attack itself, and not necessarily its success,
+drives employement down.
+
+**Second Model**
+
+$$
+Y_{c,t} = \alpha + \eta * SUCESSFULL_{c,t} + \zeta * POST_{c,t} + \theta_c + \delta_t + \epsilon_{c,t}
+$$
+
+Direct comparison with the first model but including the SUCESSFUL variable.
+Sucessful TA reduce employement by 2%, effect statistically significant at the 5% level.
+
+**Third to Six Model**
+
+Variable such as 'non-american' target and 'logistically international',
+as well as another variable absorbing employement shocks are statistically significant at the 5% level.
+
+### Earnings per capita
+
+Dependent variable: 100 * log(earnings/capita)
+
+SUCCESSFUL has an effect at conventional level (10%). Hence, debatable.
+
+### Earnings per jobs
+
+No effect at the 10% levels, hence 'effect' of aggregated earnings but not per jobs.
+Could there be a covariate explaining this?
 
 # Conclusion
 
