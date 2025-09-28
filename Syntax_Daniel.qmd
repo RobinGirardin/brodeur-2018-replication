@@ -632,3 +632,16 @@ iplot(es_mod,
 The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
 
 Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
+
+## Robustness of effects
+
+Brodeur presents several robustness checks in **Section IV.C (pp. 270–272)**:
+
+-   **Alternative datasets**: Results hold when using different employment data (BEA instead of CBP data).\
+-   **Different windows**: Varying the pre-/post-attack window (e.g. 4 or 5 years pre/post) leaves results unchanged.\
+-   **Excluding years**: Dropping one year at a time shows no single year drives results (he did 44 regressions).\
+-   **Catastrophic/outlier attacks**: Excluding large events (e.g. 9/11, Oklahoma City bombing) and ambiguous categories (mail-based, hijackings) leaves findings robust → results are not driven by outliers.\
+-   **By terrorist group**: Removing specific groups (Islamic, environmental, hate groups, etc.) does not change results.\
+-   **Population denominator**: Attacks have no significant effect on population → results reflect employment losses, not migration-driven compositional changes (important as dependent is jobs per population).
+
+**Conclusion:** The results are robust to data source, sample restrictions, exclusion of catastrophic outliers, and alternative specifications.
