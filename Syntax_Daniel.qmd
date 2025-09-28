@@ -548,7 +548,7 @@ html_print(HTML(kable(tab8A, "html")))
 - Tests for spillover effects by aggregating to broader Census regions (9 divisions).\
 - Finds no significant effects at the regional level → evidence against major spillovers.
 
-**Parallel trends assumption (see our check further down)**\
+**Parallel trends assumption**\
 - Event-study analysis with leads (pre-attack years).\
 - Pre-coefficients ≈ 0 and statistically insignificant → supports parallel trends.
 
@@ -561,6 +561,11 @@ html_print(HTML(kable(tab8A, "html")))
 - Counties are defined by fixed FIPS codes → no boundary changes.\
 - Migration or firm exit would be part of the causal mechanism, not a threat to identification.\
 - Robustness checks: restrict sample to counties with a single attack, exclude multiple-event years, etc.
+
+**Exogeneity**\
+- Core assumption: success vs. failure of an attack is unrelated to underlying employment trends.\
+- Justification: the outcome of an attack (success/failure) is plausibly random ex ante.\
+- Supported by the absence of differential pre-trends and the stability of population (no selective out-migration).
 
 **Common shocks**\
 - Includes year fixed effects (absorbing nationwide shocks such as recessions) and month fixed effects (seasonality).\
