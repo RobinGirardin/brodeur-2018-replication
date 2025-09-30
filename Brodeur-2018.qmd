@@ -143,6 +143,7 @@ Additionnaly, given a particular location, the successfulness or failure of a TA
 
 ```{r}
 #| label: Year of event
+load("Brodeur (2018).RData")
 
 # Step 1: Get the event year (first 0->1 edge in post) and success status for each county.
 ev_info <- df %>%
@@ -213,6 +214,29 @@ He also add condition the analysis on common possible covariate to avoid cofound
 the attack type of the weapon type.
 
 # Descriptive Statistics
+
+Here are the main key points of the paper Section III - Descriptive statistics.
+
+* About 86% of county-year observations involve at least one successful terror attack.
+* Around 30% of observations feature more than one attempted attack in the same year/county.
+
+Concerning casualities, for successful terror attacks,
+the average amount of death is 4.2 for 3.4 injured, 
+while for failed terror attacks, the average death rate is 0.3 for 2.4 injured.
+Those estimates excludes Oklahoma City bombing and September 11, 2001.
+
+Concerning property dammage, the mean dammage is approximately 750000$.
+However, the property dammage is unkown for more than 2/3 of the sample.
+For 25% of the unkown property dammage, another variable qualitatively evaluate said dommage in 3 categories:
+* Catastrophic (> $1 billion)
+* Major ($1 million – $1 billion), approx. 40 TA
+* Minor (< $1 million)
+
+Concerning attack types, the most common attacks types are bombing/explosives and infrastructure attacks (arson, sabotage).
+
+Conerning weapons, vast majority of attacks are explosives and incendiaries.
+
+50% of the attacks are carried by lone-wolf of small non-affiliated groups with larger organization.
 
 # Results
 
@@ -299,6 +323,31 @@ Could there be a covariate explaining this?
 A significant effect on the 10% level is debatable.
 Additionnaly, the effect on aggregated earnings but not per job means there is likely a covariate involved.
 Hence the result aren't really plausible.
+
+## Result Robustness
+
+To check for estimates robustness, Brodeur squared the number of attacks, which didn't not affected the size and significant of main estimates.
+
+Analysis and models includes different variables and effects, ensuring robustness of the estimates with respect to potential covariates.
+
+In Appendix A8 and A9, he purposefully omits a single year of the data to see wehter the result are influence by few observation.
+Since the data spans 44 years, 44 OLS models, each excluding a particular year of the data, were run.
+There were no changes in effect.
+
+Estimates and effect are also not driven by attacks on ambiguous locations (hijacking/hostage, mail-based attack).
+Also, omitting catastrophic property dommages (outliers) don't affect estimate and effects.
+
+Checking for effects or organization behind the attacks by omitting each of them  revealed no change in 
+estimate and effects.
+
+Additionnaly, and importantly, there is no evidence that successful attacks lead of the migration out of the county different that 0.
+Hence, estimate and effects aren't likely biased by migration.
+
+**Conclusion**
+
+The result are robust to many different samples. Change in samples didn't lead to difference in effects.
+Results aren't likely driven by outliers in property dommages, particularly gruesom years, ambiguous location.
+Results aren't likely driven by particular terrorist groups.
 
 # Conclusion
 
