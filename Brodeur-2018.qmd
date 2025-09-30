@@ -324,6 +324,31 @@ A significant effect on the 10% level is debatable.
 Additionnaly, the effect on aggregated earnings but not per job means there is likely a covariate involved.
 Hence the result aren't really plausible.
 
+## Result Robustness
+
+To check for estimates robustness, Brodeur squared the number of attacks, which didn't not affected the size and significant of main estimates.
+
+Analysis and models includes different variables and effects, ensuring robustness of the estimates with respect to potential covariates.
+
+In Appendix A8 and A9, he purposefully omits a single year of the data to see wehter the result are influence by few observation.
+Since the data spans 44 years, 44 OLS models, each excluding a particular year of the data, were run.
+There were no changes in effect.
+
+Estimates and effect are also not driven by attacks on ambiguous locations (hijacking/hostage, mail-based attack).
+Also, omitting catastrophic property dommages (outliers) don't affect estimate and effects.
+
+Checking for effects or organization behind the attacks by omitting each of them  revealed no change in 
+estimate and effects.
+
+Additionnaly, and importantly, there is no evidence that successful attacks lead of the migration out of the county different that 0.
+Hence, estimate and effects aren't likely biased by migration.
+
+**Conclusion**
+
+The result are robust to many different samples. Change in samples didn't lead to difference in effects.
+Results aren't likely driven by outliers in property dommages, particularly gruesom years, ambiguous location.
+Results aren't likely driven by particular terrorist groups.
+
 # Conclusion
 
 This section responds to the following questions:
