@@ -10,6 +10,8 @@ Load libraries.
 ```{r}
 #| label: libraries
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 library(tidyverse)
 library(fixest)
@@ -23,6 +25,8 @@ Load data.
 ```{r}
 #| label: dataload
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 load("C:/Users/dhub1/RStudioProjects/Brodeur-2018/Brodeur (2018).RData")
 variable_table <- read_csv("variable_table.csv")
@@ -33,6 +37,8 @@ Check data (in Console) and open variable_table
 ```{r}
 #| label: datacheck
 #| include: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 str(df)
 glimpse(df)
@@ -51,6 +57,8 @@ df %>%
 
 ```{r}
 #| label: figure1
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 # identify years with attack(s) within fips
 attack_years <- df %>%
@@ -104,6 +112,8 @@ ggplot(yearly_table, aes(x = year, y = count_events, color = factor(successful1)
 ```{r}
 #| label: table6Models
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 df_sub <- df %>%
   filter(!is.na(successful))
@@ -245,6 +255,8 @@ m6C6 <- feols(
 
 ```{r}
 #| label: tableCommons
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 # define common table properties
 dict_common <- c(
@@ -276,6 +288,8 @@ order_common <- c(
 ```{r}
 #| label: Table6PanelA
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab6A <- etable(list(m6A1, m6A2, m6A3, m6A4, m6A5, m6A6),
        se.below = TRUE,
@@ -284,8 +298,8 @@ tab6A <- etable(list(m6A1, m6A2, m6A3, m6A4, m6A5, m6A6),
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab6A, format = "pipe")
-html_print(HTML(kable(tab6A, "html")))
+knitr::kable(tab6A, format = "pipe")
+# html_print(HTML(kable(tab6A, "html")))
 
 ```
 
@@ -294,6 +308,8 @@ html_print(HTML(kable(tab6A, "html")))
 ```{r}
 #| label: Table6PanelB
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab6B <- etable(list(m6B1, m6B2, m6B3, m6B4, m6B5, m6B6),
        se.below = TRUE,
@@ -302,8 +318,8 @@ tab6B <- etable(list(m6B1, m6B2, m6B3, m6B4, m6B5, m6B6),
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab6B, format = "pipe")
-html_print(HTML(kable(tab6B, "html")))
+knitr::kable(tab6B, format = "pipe")
+# html_print(HTML(kable(tab6B, "html")))
 
 ```
 
@@ -312,6 +328,8 @@ html_print(HTML(kable(tab6B, "html")))
 ```{r}
 #| label: Table6PanelC
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab6C <- etable(list(m6C1, m6C2, m6C3, m6C4, m6C5, m6C6),
        se.below = TRUE,
@@ -320,8 +338,8 @@ tab6C <- etable(list(m6C1, m6C2, m6C3, m6C4, m6C5, m6C6),
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab6C, format = "pipe")
-html_print(HTML(kable(tab6C, "html")))
+knitr::kable(tab6C, format = "pipe")
+# html_print(HTML(kable(tab6C, "html")))
 
 ```
 
@@ -332,6 +350,8 @@ html_print(HTML(kable(tab6C, "html")))
 ```{r}
 #| label: table7Models
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 df_sub <- df %>%
   filter(!is.na(successful))
@@ -429,6 +449,8 @@ m7B6 <- feols(
 ```{r}
 #| label: Table7PanelA
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab7A <- etable(list(m7A1, m7A2, m7A3, m7A4, m7A5, m7A6),
        se.below = TRUE,
@@ -437,8 +459,8 @@ tab7A <- etable(list(m7A1, m7A2, m7A3, m7A4, m7A5, m7A6),
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab7A, format = "pipe")
-html_print(HTML(kable(tab7A, "html")))
+knitr::kable(tab7A, format = "pipe")
+# html_print(HTML(kable(tab7A, "html")))
 
 ```
 
@@ -447,6 +469,8 @@ html_print(HTML(kable(tab7A, "html")))
 ```{r}
 #| label: Table7PanelB
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab7B <- etable(list(m7B1, m7B2, m7B3, m7B4, m7B5, m7B6),
        se.below = TRUE,
@@ -455,8 +479,8 @@ tab7B <- etable(list(m7B1, m7B2, m7B3, m7B4, m7B5, m7B6),
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab7B, format = "pipe")
-html_print(HTML(kable(tab7B, "html")))
+knitr::kable(tab7B, format = "pipe")
+# html_print(HTML(kable(tab7B, "html")))
 
 ```
 
@@ -469,6 +493,8 @@ First we have to calculate the ln of the housing index (assuming the variable in
 ```{r}
 #| label: table8Models
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 df_sub <- df %>%
   filter(!is.na(successful)) %>% 
@@ -527,6 +553,8 @@ m8A6 <- feols(
 ```{r}
 #| label: Table8PanelA
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab8A <- etable(list(m8A1, m8A2, m8A3, m8A4, m8A5, m8A6),
        se.below = TRUE,
@@ -535,8 +563,8 @@ tab8A <- etable(list(m8A1, m8A2, m8A3, m8A4, m8A5, m8A6),
        drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
 
 ## for rendering: knitr...  for interactive: html_print...
-# knitr::kable(tab8A, format = "pipe")
-html_print(HTML(kable(tab8A, "html")))
+knitr::kable(tab8A, format = "pipe")
+# html_print(HTML(kable(tab8A, "html")))
 
 ```
 
@@ -578,6 +606,8 @@ html_print(HTML(kable(tab8A, "html")))
 
 ```{r}
 #| label: Year of event
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 # Step 1: Get the event year (first 0->1 edge in post) and success status for each county.
 ev_info <- df %>%
@@ -605,6 +635,8 @@ df_es_win <- df_es %>% filter(event_time >= -3, event_time <= 3)
 ```{r}
 #| label: iPlot
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 es_mod <- feols(
   ln_emp_pop ~ i(event_time, is_success, ref = -1) | fips + year,
@@ -650,3 +682,97 @@ Brodeur presents several robustness checks in **Section IV.C (pp. 270–272)**:
 -   **Population denominator**: Attacks have no significant effect on population → results reflect employment losses, not migration-driven compositional changes (important as dependent is jobs per population).
 
 **Conclusion:** The results are robust to data source, sample restrictions, exclusion of catastrophic outliers, and alternative specifications.
+
+
+## Other Studies Brodeur relates to in his paper
+
+In positioning his contribution, Brodeur (2018) relates his work to a growing literature on the economic consequences of terrorism. He highlights the seminal studies by Abadie and Gardeazabal (2003, 2008), which show substantial economic costs of terrorism in the Basque Country and in cross-country settings, as well as Blomberg, Hess, and Orphanides (2004) and Enders and Sandler (2005), who document macroeconomic losses from terrorism. At the regional and sectoral level, Greenbaum, Dugan, and LaFree (2007) and Öcal and Yildirim (2010) study the local economic impacts of terror in Italy and Turkey. Brodeur also notes the literature on mechanisms through which terrorism affects economic outcomes, such as real estate markets (Besley and Mueller 2012; Abadie and Dermisi 2008) and well-being (Frey, Luechinger, and Stutzer 2007).
+
+His study complements this work by exploiting variation between successful and failed attacks at the U.S. county level, providing new micro-level evidence. A complete list of related studies cited in Brodeur (2018) is provided in the Appendix.
+
+## Recent Literature on the Economic Consequences of Terrorism (Post-2018)
+
+Research on the economic effects of terrorism has continued to grow since Brodeur (2018).  
+While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms.  
+This shows the continuing interest in understanding how terrorism shapes economies at different levels.
+
+### Selected Studies After 2018
+
+- **Meierrieks et al. (2025). “The effect of terrorism on economic inequality in democracies.”**  
+  Finds that increased terrorist activity is associated with rising income inequality in democracies.  
+  [ScienceDirect link](https://www.sciencedirect.com/science/article/pii/S0176268024001423?utm_source=chatgpt.com)
+
+- **Bardwell & Mohib (2021). “The Economic Impact of Terrorism from 2000 to 2018.”**  
+  Uses a cost-accounting approach to estimate global costs of terrorism (deaths, property damage, GDP losses).  
+  [De Gruyter link](https://www.degruyterbrill.com/document/doi/10.1515/peps-2020-0031/html?lang=en&srsltid=AfmBOorsQnmkbPkTmSKs5_1Zse2SPNAOumb-Sfibi7GjRCHBpPN5yI0u&utm_source=chatgpt.com)
+
+- **Tingbani (2019). “Terrorism and country-level global business failure.”**  
+  Examines how terrorism affects business failure at the national level.  
+  [ScienceDirect link](https://www.sciencedirect.com/science/article/abs/pii/S0148296318304211?utm_source=chatgpt.com)
+
+- **Sandler (2025). “An Economic Perspective on Terrorism and Counterterrorism.”**  
+  Provides a recent overview of the economics of terrorism and counterterrorism policies.  
+  [Taylor & Francis link](https://www.tandfonline.com/doi/abs/10.1080/09546553.2023.2259992?utm_source=chatgpt.com)
+
+- **Brodeur (2022). “On the Economic Consequences of Mass Shootings.”**  
+  Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact.  
+  [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
+
+### Studies Citing Brodeur (2018)
+
+We have identified two recent studies that explicitly cite Brodeur (2018) and build on his findings regarding the economic consequences of terrorism:
+
+- **Amarasinghe (2023), “Public sentiment in times of terror,” Journal of Development Economics**  
+  - Cites Brodeur (2018) when describing the identification strategy based on successful vs. failed attacks (p. 4).  
+  - Refers to Brodeur’s findings on employment and wages in the related literature section (p. 5).  
+  - [PDF link](https://ashaniamarasinghe.github.io/docs/Public_Sentiment_in_Times_of_Terror.pdf)
+
+- **Chen (2025), “Rally post-terrorism,” Journal of Population Economics**  
+  - References Brodeur (2018) to highlight that successful attacks cause larger economic damage than failed ones (p. 6).  
+  - Mentions Brodeur’s evidence on job losses and adverse business conditions after successful terrorism (p. 22).  
+  - [Springer link](https://link.springer.com/article/10.1007/s00148-025-01106-2)
+
+
+## Appendix
+
+### Literature cited in Brodeur (2018)
+
+#### Macroeconomic effects
+- Abadie & Gardeazabal (2003) – Basque Country (pp. 246–247)  
+- Abadie & Gardeazabal (2008) – Terrorism and the world economy (pp. 280–281)  
+- Blomberg, Hess & Orphanides (2004) – Macroeconomic consequences of terrorism (pp. 246–247)  
+- Crain & Crain (2006) – Terrorized economies (pp. 246–247, 281)  
+- Enders, Sandler & Parise (1992) – Terrorism and tourism (p. 249)  
+- Enders & Sandler (2005) – After 9/11 (p. 249)  
+- Enders, Sandler & Gaibulloev (2011) – Domestic vs transnational terrorism (p. 249)  
+- Enders, Hoover & Sandler (2016) – Terrorism and growth (p. 246)  
+- Gaibulloev & Sandler (2008) – Growth consequences in Western Europe (p. 246)  
+- Gaibulloev, Sandler & Sul (2014) – Dynamic panel analysis (p. 246)  
+- Gries, Krieger & Meierrieks (2011) – Terrorism and growth (p. 246)  
+- Meierrieks & Gries (2013) – Terrorism and growth (p. 246)  
+- Tavares (2004) – Terrorism and open economies (p. 246)  
+
+#### Regional / local effects
+- Öcal & Yildirim (2010) – Turkey (p. 246)  
+- Greenbaum, Dugan & LaFree (2007) – Italy (pp. 246, 282)  
+- Landes (1978) – Aircraft hijacking (p. 249)  
+- Ratcliffe & von Hinke (2015) – London bombings (pp. 249, 281)  
+
+#### Channels / mechanisms
+- Becker & Murphy (2001) – Uncertainty after terror (p. 246)  
+- Becker & Rubinstein (2011) – Fear and response (pp. 270–271)  
+- Frey, Luechinger & Stutzer (2007) – Costs of terrorism / life satisfaction (pp. 249, 281)  
+- Besley & Mueller (2012) – Violence and house prices (pp. 249, 281)  
+- Glaeser & Shapiro (2002) – Terrorism and urban form (pp. 249, 282)  
+- Abadie & Dermisi (2008) – Terrorism and real estate (p. 280)  
+- Benmelech, Berrebi & Klor (2010, 2012) – Terrorism costs and suicide terrorism (p. 281)  
+
+#### Other relevant studies
+- Di Tella & Schargrodsky (2004) – Police after attacks (pp. 249, 281)  
+- Draca, Machin & Witt (2011) – London terror and crime (pp. 249, 281)  
+- Klick & Tabarrok (2005) – Police and terror alert levels (p. 249)  
+- Krueger & Malečková (2003); Krueger (2007) – Causes of terrorism (p. 249)  
+- Mitra, Pham & Bandyopadhyay (2017) – Terror and air passenger transport (p. 281)  
+- Ratcliffe & von Hinke (2015) – London bombings and prejudice (p. 281)  
+
+
