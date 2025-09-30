@@ -2,6 +2,28 @@
 title: "Brodeur-2018"
 ---
 
+#| label: libraries
+#| message: false
+
+library(tidyverse)
+library(fixest)
+library(knitr)
+library(htmltools)
+
+```
+
+Load data.
+
+```{r}
+#| label: dataload
+#| message: false
+
+load("C:/Users/dhub1/RStudioProjects/Brodeur-2018/Brodeur (2018).RData")
+variable_table <- read_csv("variable_table.csv")
+```
+
+
+Check data (in Console) and open variable_table
 # Motivation 
 
 The motivation section responds to the following questions: 
@@ -303,15 +325,16 @@ as well as another variable absorbing employement shocks are statistically signi
 
 There is a significant negative effect of successfulness of an attack on job/capita.
 The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimateThe standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate.
+
 ### Earnings per capita
 
 Dependent variable: 100 * log(earnings/capita)
 
-SUCCESSFUL has an effect at conventional level (10%). Hence, debatable.
+SUCCESSFUL has an effect at conventional level (?). 
 
 #### Plausibility
-
-10% significance levels is small. However, standard errors are half as big as the estimates, indicating that the estimates is relatively close to the true SUCCESSFUL estimates.
+if the significance levels is 10%, then it is small. However, standard errors are half as big as the estimates, indicating that the estimates is relatively close to the true SUCCESSFUL estimates.
+Otherwise, effect at 5% is commendable.
 
 ### Earnings per jobs
 
@@ -337,11 +360,15 @@ There were no changes in effect.
 Estimates and effect are also not driven by attacks on ambiguous locations (hijacking/hostage, mail-based attack).
 Also, omitting catastrophic property dommages (outliers) don't affect estimate and effects.
 
-Checking for effects or organization behind the attacks by omitting each of them  revealed no change in 
+Checking for effects or organization behind the attacks by omitting each of them revealed no change in 
 estimate and effects.
 
 Additionnaly, and importantly, there is no evidence that successful attacks lead of the migration out of the county different that 0.
 Hence, estimate and effects aren't likely biased by migration.
+
+However, the result and analysis cannot be generalized to other countries, as it is solely based on USA data.
+Indeed, USA economy, housing markets and culture is quite unite, hence extrapolating the result to other countries is a mistake.
+
 
 **Conclusion**
 
@@ -353,6 +380,7 @@ Results aren't likely driven by particular terrorist groups.
 
 This section responds to the following questions:
 
-* How do you replication results copamre to the results of the research paper?
-* Are there similar studies and how do your results
-compare to these results?
+* How do your replication results compares to the results of the research paper?
+* Are there similar studies and how do your results compare to these results?
+
+
