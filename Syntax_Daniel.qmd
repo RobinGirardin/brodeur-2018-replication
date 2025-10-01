@@ -613,7 +613,7 @@ Overall, our findings are **nearly identical** to the original across all three 
 ### Visual Summary
 
 |                  | Brodeur (2018)         | Our Replication | Difference       |
-|-----------------|---------------------|-----------------|-----------------|
+|------------------|--------------------|------------------|------------------|
 | **Coefficients** | Identical (Tables 6–8) | Identical       | None             |
 | **Std. Errors**  | 0.60–2.25              | 0.53–2.13       | Slightly smaller |
 | **R²**           | 0.916–0.976            | 0.926–0.983     | Slightly higher  |
@@ -780,8 +780,7 @@ plot_data <- df_es_win %>%
 
 # Make plot
 ggplot(plot_data, aes(x = event_time, y = mean_ln_emp_pop, 
-                      color = factor(is_success), 
-                      group = factor(is_success))) +
+                      color = factor(is_success))) +
   geom_line(linewidth = 1) +
   geom_point(size = 2) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
