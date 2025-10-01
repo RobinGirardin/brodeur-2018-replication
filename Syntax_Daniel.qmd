@@ -664,6 +664,38 @@ iplot(es_mod,
 
 ```
 
+```{r}
+
+# Aggregate data: means for each event_time and is_success
+plot_data <- df_es_win %>%
+  group_by(event_time, is_success) %>%
+  summarise(
+    mean_ln_emp_pop = mean(ln_emp_pop, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Make plot
+ggplot(plot_data, aes(x = event_time, y = mean_ln_emp_pop, 
+                      color = factor(is_success), 
+                      group = factor(is_success))) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
+  scale_color_manual(
+    values = c("0" = "darkgreen", "1" = "red"),
+    labels = c("0" = "Failed", "1" = "Successful"),
+    name = "Attack Status"
+  ) +
+  labs(
+    title = "Employment trends: Successful vs Failed attacks",
+    x = "Years relative to event",
+    y = "Mean log(Employment/Population)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+```
+
 #### Interpretation
 
 The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
@@ -683,7 +715,6 @@ Brodeur presents several robustness checks in **Section IV.C (pp. 270–272)**:
 
 **Conclusion:** The results are robust to data source, sample restrictions, exclusion of catastrophic outliers, and alternative specifications.
 
-
 ## Other Studies Brodeur relates to in his paper
 
 In positioning his contribution, Brodeur (2018) relates his work to a growing literature on the economic consequences of terrorism. He highlights the seminal studies by Abadie and Gardeazabal (2003, 2008), which show substantial economic costs of terrorism in the Basque Country and in cross-country settings, as well as Blomberg, Hess, and Orphanides (2004) and Enders and Sandler (2005), who document macroeconomic losses from terrorism. At the regional and sectoral level, Greenbaum, Dugan, and LaFree (2007) and Öcal and Yildirim (2010) study the local economic impacts of terror in Italy and Turkey. Brodeur also notes the literature on mechanisms through which terrorism affects economic outcomes, such as real estate markets (Besley and Mueller 2012; Abadie and Dermisi 2008) and well-being (Frey, Luechinger, and Stutzer 2007).
@@ -692,87 +723,87 @@ His study complements this work by exploiting variation between successful and f
 
 ## Recent Literature on the Economic Consequences of Terrorism (Post-2018)
 
-Research on the economic effects of terrorism has continued to grow since Brodeur (2018).  
-While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms.  
+Research on the economic effects of terrorism has continued to grow since Brodeur (2018).\
+While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms.\
 This shows the continuing interest in understanding how terrorism shapes economies at different levels.
 
 ### Selected Studies After 2018
 
-- **Meierrieks et al. (2025). “The effect of terrorism on economic inequality in democracies.”**  
-  Finds that increased terrorist activity is associated with rising income inequality in democracies.  
-  [ScienceDirect link](https://www.sciencedirect.com/science/article/pii/S0176268024001423?utm_source=chatgpt.com)
+-   **Meierrieks et al. (2025). “The effect of terrorism on economic inequality in democracies.”**\
+    Finds that increased terrorist activity is associated with rising income inequality in democracies.\
+    [ScienceDirect link](https://www.sciencedirect.com/science/article/pii/S0176268024001423?utm_source=chatgpt.com)
 
-- **Bardwell & Mohib (2021). “The Economic Impact of Terrorism from 2000 to 2018.”**  
-  Uses a cost-accounting approach to estimate global costs of terrorism (deaths, property damage, GDP losses).  
-  [De Gruyter link](https://www.degruyterbrill.com/document/doi/10.1515/peps-2020-0031/html?lang=en&srsltid=AfmBOorsQnmkbPkTmSKs5_1Zse2SPNAOumb-Sfibi7GjRCHBpPN5yI0u&utm_source=chatgpt.com)
+-   **Bardwell & Mohib (2021). “The Economic Impact of Terrorism from 2000 to 2018.”**\
+    Uses a cost-accounting approach to estimate global costs of terrorism (deaths, property damage, GDP losses).\
+    [De Gruyter link](https://www.degruyterbrill.com/document/doi/10.1515/peps-2020-0031/html?lang=en&srsltid=AfmBOorsQnmkbPkTmSKs5_1Zse2SPNAOumb-Sfibi7GjRCHBpPN5yI0u&utm_source=chatgpt.com)
 
-- **Tingbani (2019). “Terrorism and country-level global business failure.”**  
-  Examines how terrorism affects business failure at the national level.  
-  [ScienceDirect link](https://www.sciencedirect.com/science/article/abs/pii/S0148296318304211?utm_source=chatgpt.com)
+-   **Tingbani (2019). “Terrorism and country-level global business failure.”**\
+    Examines how terrorism affects business failure at the national level.\
+    [ScienceDirect link](https://www.sciencedirect.com/science/article/abs/pii/S0148296318304211?utm_source=chatgpt.com)
 
-- **Sandler (2025). “An Economic Perspective on Terrorism and Counterterrorism.”**  
-  Provides a recent overview of the economics of terrorism and counterterrorism policies.  
-  [Taylor & Francis link](https://www.tandfonline.com/doi/abs/10.1080/09546553.2023.2259992?utm_source=chatgpt.com)
+-   **Sandler (2025). “An Economic Perspective on Terrorism and Counterterrorism.”**\
+    Provides a recent overview of the economics of terrorism and counterterrorism policies.\
+    [Taylor & Francis link](https://www.tandfonline.com/doi/abs/10.1080/09546553.2023.2259992?utm_source=chatgpt.com)
 
-- **Brodeur (2022). “On the Economic Consequences of Mass Shootings.”**  
-  Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact.  
-  [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
+-   **Brodeur (2022). “On the Economic Consequences of Mass Shootings.”**\
+    Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact.\
+    [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
 
 ### Studies Citing Brodeur (2018)
 
 We have identified two recent studies that explicitly cite Brodeur (2018) and build on his findings regarding the economic consequences of terrorism:
 
-- **Amarasinghe (2023), “Public sentiment in times of terror,” Journal of Development Economics**  
-  - Cites Brodeur (2018) when describing the identification strategy based on successful vs. failed attacks (p. 4).  
-  - Refers to Brodeur’s findings on employment and wages in the related literature section (p. 5).  
-  - [PDF link](https://ashaniamarasinghe.github.io/docs/Public_Sentiment_in_Times_of_Terror.pdf)
-
-- **Chen (2025), “Rally post-terrorism,” Journal of Population Economics**  
-  - References Brodeur (2018) to highlight that successful attacks cause larger economic damage than failed ones (p. 6).  
-  - Mentions Brodeur’s evidence on job losses and adverse business conditions after successful terrorism (p. 22).  
-  - [Springer link](https://link.springer.com/article/10.1007/s00148-025-01106-2)
-
+-   **Amarasinghe (2023), “Public sentiment in times of terror,” Journal of Development Economics**
+    -   Cites Brodeur (2018) when describing the identification strategy based on successful vs. failed attacks (p. 4).\
+    -   Refers to Brodeur’s findings on employment and wages in the related literature section (p. 5).\
+    -   [PDF link](https://ashaniamarasinghe.github.io/docs/Public_Sentiment_in_Times_of_Terror.pdf)
+-   **Chen (2025), “Rally post-terrorism,” Journal of Population Economics**
+    -   References Brodeur (2018) to highlight that successful attacks cause larger economic damage than failed ones (p. 6).\
+    -   Mentions Brodeur’s evidence on job losses and adverse business conditions after successful terrorism (p. 22).\
+    -   [Springer link](https://link.springer.com/article/10.1007/s00148-025-01106-2)
 
 ## Appendix
 
 ### Literature cited in Brodeur (2018)
 
 #### Macroeconomic effects
-- Abadie & Gardeazabal (2003) – Basque Country (pp. 246–247)  
-- Abadie & Gardeazabal (2008) – Terrorism and the world economy (pp. 280–281)  
-- Blomberg, Hess & Orphanides (2004) – Macroeconomic consequences of terrorism (pp. 246–247)  
-- Crain & Crain (2006) – Terrorized economies (pp. 246–247, 281)  
-- Enders, Sandler & Parise (1992) – Terrorism and tourism (p. 249)  
-- Enders & Sandler (2005) – After 9/11 (p. 249)  
-- Enders, Sandler & Gaibulloev (2011) – Domestic vs transnational terrorism (p. 249)  
-- Enders, Hoover & Sandler (2016) – Terrorism and growth (p. 246)  
-- Gaibulloev & Sandler (2008) – Growth consequences in Western Europe (p. 246)  
-- Gaibulloev, Sandler & Sul (2014) – Dynamic panel analysis (p. 246)  
-- Gries, Krieger & Meierrieks (2011) – Terrorism and growth (p. 246)  
-- Meierrieks & Gries (2013) – Terrorism and growth (p. 246)  
-- Tavares (2004) – Terrorism and open economies (p. 246)  
+
+-   Abadie & Gardeazabal (2003) – Basque Country (pp. 246–247)\
+-   Abadie & Gardeazabal (2008) – Terrorism and the world economy (pp. 280–281)\
+-   Blomberg, Hess & Orphanides (2004) – Macroeconomic consequences of terrorism (pp. 246–247)\
+-   Crain & Crain (2006) – Terrorized economies (pp. 246–247, 281)\
+-   Enders, Sandler & Parise (1992) – Terrorism and tourism (p. 249)\
+-   Enders & Sandler (2005) – After 9/11 (p. 249)\
+-   Enders, Sandler & Gaibulloev (2011) – Domestic vs transnational terrorism (p. 249)\
+-   Enders, Hoover & Sandler (2016) – Terrorism and growth (p. 246)\
+-   Gaibulloev & Sandler (2008) – Growth consequences in Western Europe (p. 246)\
+-   Gaibulloev, Sandler & Sul (2014) – Dynamic panel analysis (p. 246)\
+-   Gries, Krieger & Meierrieks (2011) – Terrorism and growth (p. 246)\
+-   Meierrieks & Gries (2013) – Terrorism and growth (p. 246)\
+-   Tavares (2004) – Terrorism and open economies (p. 246)
 
 #### Regional / local effects
-- Öcal & Yildirim (2010) – Turkey (p. 246)  
-- Greenbaum, Dugan & LaFree (2007) – Italy (pp. 246, 282)  
-- Landes (1978) – Aircraft hijacking (p. 249)  
-- Ratcliffe & von Hinke (2015) – London bombings (pp. 249, 281)  
+
+-   Öcal & Yildirim (2010) – Turkey (p. 246)\
+-   Greenbaum, Dugan & LaFree (2007) – Italy (pp. 246, 282)\
+-   Landes (1978) – Aircraft hijacking (p. 249)\
+-   Ratcliffe & von Hinke (2015) – London bombings (pp. 249, 281)
 
 #### Channels / mechanisms
-- Becker & Murphy (2001) – Uncertainty after terror (p. 246)  
-- Becker & Rubinstein (2011) – Fear and response (pp. 270–271)  
-- Frey, Luechinger & Stutzer (2007) – Costs of terrorism / life satisfaction (pp. 249, 281)  
-- Besley & Mueller (2012) – Violence and house prices (pp. 249, 281)  
-- Glaeser & Shapiro (2002) – Terrorism and urban form (pp. 249, 282)  
-- Abadie & Dermisi (2008) – Terrorism and real estate (p. 280)  
-- Benmelech, Berrebi & Klor (2010, 2012) – Terrorism costs and suicide terrorism (p. 281)  
+
+-   Becker & Murphy (2001) – Uncertainty after terror (p. 246)\
+-   Becker & Rubinstein (2011) – Fear and response (pp. 270–271)\
+-   Frey, Luechinger & Stutzer (2007) – Costs of terrorism / life satisfaction (pp. 249, 281)\
+-   Besley & Mueller (2012) – Violence and house prices (pp. 249, 281)\
+-   Glaeser & Shapiro (2002) – Terrorism and urban form (pp. 249, 282)\
+-   Abadie & Dermisi (2008) – Terrorism and real estate (p. 280)\
+-   Benmelech, Berrebi & Klor (2010, 2012) – Terrorism costs and suicide terrorism (p. 281)
 
 #### Other relevant studies
-- Di Tella & Schargrodsky (2004) – Police after attacks (pp. 249, 281)  
-- Draca, Machin & Witt (2011) – London terror and crime (pp. 249, 281)  
-- Klick & Tabarrok (2005) – Police and terror alert levels (p. 249)  
-- Krueger & Malečková (2003); Krueger (2007) – Causes of terrorism (p. 249)  
-- Mitra, Pham & Bandyopadhyay (2017) – Terror and air passenger transport (p. 281)  
-- Ratcliffe & von Hinke (2015) – London bombings and prejudice (p. 281)  
 
-
+-   Di Tella & Schargrodsky (2004) – Police after attacks (pp. 249, 281)\
+-   Draca, Machin & Witt (2011) – London terror and crime (pp. 249, 281)\
+-   Klick & Tabarrok (2005) – Police and terror alert levels (p. 249)\
+-   Krueger & Malečková (2003); Krueger (2007) – Causes of terrorism (p. 249)\
+-   Mitra, Pham & Bandyopadhyay (2017) – Terror and air passenger transport (p. 281)\
+-   Ratcliffe & von Hinke (2015) – London bombings and prejudice (p. 281)
