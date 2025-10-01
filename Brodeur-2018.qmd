@@ -1,7 +1,9 @@
 ---
 title: "Brodeur-2018"
+format: html
 ---
 
+```{r}
 #| label: libraries
 #| message: false
 
@@ -9,16 +11,14 @@ library(tidyverse)
 library(fixest)
 library(knitr)
 library(htmltools)
-
+library(readr)
 ```
-
-Load data.
 
 ```{r}
 #| label: dataload
 #| message: false
 
-load("C:/Users/dhub1/RStudioProjects/Brodeur-2018/Brodeur (2018).RData")
+load("Brodeur (2018).RData")
 variable_table <- read_csv("variable_table.csv")
 ```
 
@@ -203,7 +203,8 @@ iplot(es_mod,
       main = "Event study (successful vs failed): parallel-trend check",
       xlab = "Years relative to event (ref = -1)",
       ref.line = 0)
-      
+
+summary(es_mod)
 # tidy_es <- broom::tidy(es_mod, conf.int = TRUE) %>%
 #   filter(str_detect(term, "^event_time::")) %>%
 #   mutate(event_time = as.numeric(str_match(term, "event_time::(-?\\d+)")[,2]))
@@ -383,4 +384,447 @@ This section responds to the following questions:
 * How do your replication results compares to the results of the research paper?
 * Are there similar studies and how do your results compare to these results?
 
+# Appendix
 
+## Replication of table 6
+
+### Create the models
+
+```{r}
+#| label: table6Models
+#| message: false
+
+df_sub <- df %>%
+  filter(!is.na(successful))
+
+# Panel A – Brodeur Table 6
+m6A1 <- feols(
+  ln_emp_pop ~ post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m6A2 <- feols(
+  ln_emp_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m6A3 <- feols(
+  ln_emp_pop ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l,
+  cluster = ~fips, data = df_sub
+)
+
+m6A4 <- feols(
+  ln_emp_pop ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m6A5 <- feols(
+  ln_emp_pop ~ successful + post + meventperyear |
+    fips + month^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m6A6 <- feols(
+  ln_emp_pop ~ successful + post + meventperyear |
+    fips + month^year + div_9_all^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+
+# Panel B
+m6B1 <- feols(
+  ln_real_qp1_pop ~ post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m6B2 <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m6B3 <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l,
+  cluster = ~fips, data = df_sub
+)
+
+m6B4 <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m6B5 <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear |
+    fips + month^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m6B6 <- feols(
+  ln_real_qp1_pop ~ successful + post + meventperyear |
+    fips + month^year + div_9_all^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+
+# Panel C
+m6C1 <- feols(
+  ln_real_qp1_job ~ post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m6C2 <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m6C3 <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l,
+  cluster = ~fips, data = df_sub
+)
+
+m6C4 <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m6C5 <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear |
+    fips + month^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m6C6 <- feols(
+  ln_real_qp1_job ~ successful + post + meventperyear |
+    fips + month^year + div_9_all^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+```
+
+### Create table 6
+
+```{r}
+#| label: tableCommons
+
+# define common table properties
+dict_common <- c(
+  post = "Post-attack",
+  successful = "Successful attack",
+  meventperyear = "Multiple events per year",
+  non_us_t = "Non-US target",
+  int_l = "International attack",
+  aa_assass = "Assassination",
+  aa_armed = "Armed assault",
+  aa_bomb = "Bombing",
+  aa_facility = "Facility attack",
+  ww_firearm = "Firearm",
+  ww_explo = "Explosives",
+  ww_incend = "Incendiary"
+)
+
+order_common <- c(
+  "%successful", "%post", "%meventperyear",
+  "%non_us_t", "%int_l",
+  "%aa_assass", "%aa_armed", "%aa_bomb", "%aa_facility",
+  "%ww_firearm", "%ww_explo", "%ww_incend"
+)
+
+```
+
+#### Table 6, Panel A: Employment (ln_emp_pop)
+
+```{r}
+#| label: Table6PanelA
+#| message: false
+
+tab6A <- etable(list(m6A1, m6A2, m6A3, m6A4, m6A5, m6A6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+knitr::kable(tab6A, format = "pipe")
+# html_print(HTML(kable(tab6A, "html")))
+
+```
+
+#### Table 6, Panel B: Earnings (ln_real_qp1_pop)
+
+```{r}
+#| label: Table6PanelB
+#| message: false
+
+tab6B <- etable(list(m6B1, m6B2, m6B3, m6B4, m6B5, m6B6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+knitr::kable(tab6B, format = "pipe")
+# html_print(HTML(kable(tab6B, "html")))
+
+```
+
+#### Table 6, Panel C: Wages (ln_real_qp1_job)
+
+```{r}
+#| label: Table6PanelC
+#| message: false
+
+tab6C <- etable(list(m6C1, m6C2, m6C3, m6C4, m6C5, m6C6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+knitr::kable(tab6C, format = "pipe")
+# html_print(HTML(kable(tab6C, "html")))
+
+```
+
+## Replication of table 7
+
+### Create the models
+
+```{r}
+#| label: table7Models
+#| message: false
+
+df_sub <- df %>%
+  filter(!is.na(successful))
+
+# Table 7 Panel A
+
+m7A1 <- feols(
+  ln_emp_manu_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7A2 <- feols(
+  ln_emp_manu_pop ~ successful + post + meventperyear |
+    fips + non_us_t + int_l + aa_assass + aa_armed + aa_bomb +
+    aa_facility + ww_firearm + ww_explo + ww_incend + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7A3 <- feols(
+  ln_emp_const_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7A4 <- feols(
+  ln_emp_const_pop ~ successful + post + meventperyear |
+    fips + non_us_t + int_l + aa_assass + aa_armed + aa_bomb +
+    aa_facility + ww_firearm + ww_explo + ww_incend + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7A5 <- feols(
+  ln_emp_whole_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7A6 <- feols(
+  ln_emp_whole_pop ~ successful + post + meventperyear |
+    fips + non_us_t + int_l + aa_assass + aa_armed + aa_bomb +
+    aa_facility + ww_firearm + ww_explo + ww_incend + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+
+# Table 7 Panel B
+
+m7B1 <- feols(
+  ln_emp_retail_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7B2 <- feols(
+  ln_emp_retail_pop ~ successful + post + meventperyear |
+    fips + non_us_t + int_l + aa_assass + aa_armed + aa_bomb +
+    aa_facility + ww_firearm + ww_explo + ww_incend + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7B3 <- feols(
+  ln_emp_services_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7B4 <- feols(
+  ln_emp_services_pop ~ successful + post + meventperyear |
+    fips + non_us_t + int_l + aa_assass + aa_armed + aa_bomb +
+    aa_facility + ww_firearm + ww_explo + ww_incend + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7B5 <- feols(
+  ln_emp_finance_pop ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m7B6 <- feols(
+  ln_emp_finance_pop ~ successful + post + meventperyear |
+    fips + non_us_t + int_l + aa_assass + aa_armed + aa_bomb +
+    aa_facility + ww_firearm + ww_explo + ww_incend + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+
+```
+
+### Create table 7
+
+#### Table 7, Panel A: Manufacturing, Construction, Wholesale
+
+```{r}
+#| label: Table7PanelA
+#| message: false
+
+tab7A <- etable(list(m7A1, m7A2, m7A3, m7A4, m7A5, m7A6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+knitr::kable(tab7A, format = "pipe")
+# html_print(HTML(kable(tab7A, "html")))
+
+```
+
+#### Table 7, Panel B: Retail trade, Services, Finance and RE
+
+```{r}
+#| label: Table7PanelB
+#| message: false
+
+tab7B <- etable(list(m7B1, m7B2, m7B3, m7B4, m7B5, m7B6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+knitr::kable(tab7B, format = "pipe")
+# html_print(HTML(kable(tab7B, "html")))
+
+```
+
+## Replication of table 8
+
+### Create the models
+
+First we have to calculate the ln of the housing index (assuming the variable in the data is the plain index).
+
+```{r}
+#| label: table8Models
+#| message: false
+
+df_sub <- df %>%
+  filter(!is.na(successful)) %>% 
+  mutate(ln_hh_index = 100 * log(housing_index))
+
+# Panel A – Brodeur Table 6
+m8A1 <- feols(
+  ln_hh_index ~ post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m8A2 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + year + month,
+  cluster = ~fips, data = df_sub
+)
+
+m8A3 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l,
+  cluster = ~fips, data = df_sub
+)
+
+m8A4 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + year + month + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m8A5 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + month^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+m8A6 <- feols(
+  ln_hh_index ~ successful + post + meventperyear |
+    fips + month^year + div_9_all^year + non_us_t + int_l +
+    aa_assass + aa_armed + aa_bomb + aa_facility +
+    ww_firearm + ww_explo + ww_incend,
+  cluster = ~fips, data = df_sub
+)
+
+
+```
+
+### Create table 8
+
+#### Table 8, Panel A: ln(house price index)
+
+```{r}
+#| label: Table8PanelA
+#| message: false
+
+tab8A <- etable(list(m8A1, m8A2, m8A3, m8A4, m8A5, m8A6),
+       se.below = TRUE,
+       signif.code = c("***"=0.01,"**"=0.05,"*"=0.10," "=1),
+       dict = dict_common, order = order_common, digits = 3,
+       drop = "Intercept", fitstat = ~n + r2, tex = FALSE)
+
+## for rendering: knitr...  for interactive: html_print...
+knitr::kable(tab8A, format = "pipe")
+# html_print(HTML(kable(tab8A, "html")))
+
+```
