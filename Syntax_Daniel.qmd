@@ -497,7 +497,7 @@ First we have to calculate the ln of the housing index (assuming the variable in
 #| code-summary: "Click to expand code"
 
 df_sub <- df %>%
-  filter(!is.na(successful)) %>% 
+  filter(!is.na(successful1)) %>% 
   mutate(ln_hh_index = 100 * log(housing_index))
 
 # Panel A – Brodeur Table 6
@@ -508,19 +508,19 @@ m8A1 <- feols(
 )
 
 m8A2 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + year + month,
   cluster = ~fips, data = df_sub
 )
 
 m8A3 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + year + month + non_us_t + int_l,
   cluster = ~fips, data = df_sub
 )
 
 m8A4 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + year + month + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
     ww_firearm + ww_explo + ww_incend,
@@ -528,7 +528,7 @@ m8A4 <- feols(
 )
 
 m8A5 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + month^year + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
     ww_firearm + ww_explo + ww_incend,
@@ -536,7 +536,7 @@ m8A5 <- feols(
 )
 
 m8A6 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + month^year + div_9_all^year + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
     ww_firearm + ww_explo + ww_incend,
@@ -565,6 +565,110 @@ tab8A <- etable(list(m8A1, m8A2, m8A3, m8A4, m8A5, m8A6),
 ## for rendering: knitr...  for interactive: html_print...
 knitr::kable(tab8A, format = "pipe")
 # html_print(HTML(kable(tab8A, "html")))
+
+```
+
+## Replication Check: Tables 6, 7, and 8
+
+We compared our replication results to those published in Brodeur (2018).\
+Overall, our findings are **nearly identical** to the original across all three tables, with only very small differences in standard errors, R² values, and sample size.
+
+### Table 6 (ln_emp_pop)
+
+-   **Successful attack:** Our coefficients (−2.00, −1.98, −2.19, −1.99, −1.82) match Brodeur’s (−1.995, −1.983, −2.191, −1.986, −1.818) almost exactly.\
+-   **Post-attack:** Estimates also align perfectly (e.g. −1.09 vs −1.087).\
+-   **Standard errors:** Slightly smaller in our replication (0.85–0.90 vs 0.88–0.94).\
+-   **R²:** Marginally higher (0.968–0.979 vs 0.965–0.971).
+
+➡️ Substantive interpretation: identical results, slightly stronger significance in our replication.
+
+------------------------------------------------------------------------
+
+### Table 7 (ln_emp_finance_pop)
+
+-   **Successful attack:** Point estimates match perfectly (e.g. −5.06, −5.53, −4.30, −4.90, −4.26, −4.69).\
+-   **Post-attack:** Identical coefficients (e.g. 2.51, 2.64, 3.28, 3.81, 3.46, 3.54).\
+-   **Standard errors:** Again, somewhat smaller in our replication (1.7–2.1 vs 1.8–2.2). This leads to additional statistical significance in some models.\
+-   **R²:** Slightly higher in our replication (0.926–0.952 vs 0.916–0.946).\
+-   **Observations:** Almost the same, differing by at most 4 observations across specifications.
+
+➡️ Substantive interpretation: coefficients identical, results fully robust to replication, with slightly stronger statistical evidence.
+
+------------------------------------------------------------------------
+
+### Table 8 (ln_hh_index, housing prices)
+
+-   **Successful attack:** Our coefficients (−1.79, −1.69, −1.70, −2.15, −1.31) match Brodeur’s almost exactly.\
+-   **Post-attack:** First column (−2.31) matches perfectly; other estimates (−1.38 to 0.10) are also very close.\
+-   **Standard errors:** Slightly smaller in our replication (e.g. 1.01 vs 1.07, 0.69 vs 0.72).\
+-   **R²:** Marginally higher (0.946–0.983 vs 0.940–0.976).\
+-   **Observations:** Our sample slightly smaller (3,444–3,463 vs 3,465).
+
+➡️ Substantive interpretation: effects on housing prices are reproduced very closely; minor deviations plausibly stem from NA-handling and software.
+
+➡️ **Important note**: The table 8 models are calculated with `successful1` instead of `successful`. This means that the year of the event is regarded as treated. We assume Brodeur has done this because house prices **react faster** than the other economical variables in tables 6 and 7 **and/or** that he knows that the housing index he uses **lags one year** (e.g. not an average over the year but the based on house prices at the end of the year).
+
+------------------------------------------------------------------------
+
+### Visual Summary
+
+|                  | Brodeur (2018)         | Our Replication | Difference       |
+|-----------------|---------------------|-----------------|-----------------|
+| **Coefficients** | Identical (Tables 6–8) | Identical       | None             |
+| **Std. Errors**  | 0.60–2.25              | 0.53–2.13       | Slightly smaller |
+| **R²**           | 0.916–0.976            | 0.926–0.983     | Slightly higher  |
+| **N**            | \~3,093–4,414          | \~3,089–4,406   | Max −21          |
+
+------------------------------------------------------------------------
+
+**Conclusion:**\
+Our replication reproduces Brodeur’s key results across employment, finance, and housing with **remarkable precision**. Differences are limited to slightly smaller standard errors, higher R², and marginally fewer observations, **most likely due to software and NA-handling**. The main findings — negative employment and housing effects of successful terrorist attacks, alongside distinct post-attack dynamics — are **fully confirmed**.
+
+```{r}
+#| label: ComparisonTables8
+#| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
+
+# Example: Brodeur vs. Replication, Table 8
+brodeur_tbl8 <- tibble(
+  model = paste0("Col", 1:5),
+  successful = c(-1.79, -1.69, -1.70, -2.15, -1.31),
+  successful_se = c(1.09, 1.09, 1.02, 1.07, 0.70),
+  post = c(-2.31, -1.38, -1.39, -1.09, -0.09),
+  post_se = c(0.60, 0.75, 0.73, 0.72, 0.80)
+)
+
+rep_tbl8 <- tibble(
+  model = paste0("Col", 1:5),
+  successful = c(-1.79, -1.69, -1.70, -2.15, -1.31),
+  successful_se = c(1.04, 1.04, 0.984, 1.01, 0.665),
+  post = c(-2.31, -1.38, -1.39, -1.09, -0.091),
+  post_se = c(0.575, 0.717, 0.697, 0.687, 0.756)
+)
+
+# Combine for ggplot
+plot_df <- bind_rows(
+  brodeur_tbl8 %>% mutate(source = "Brodeur (2018)"),
+  rep_tbl8 %>% mutate(source = "Replication")
+) %>%
+  pivot_longer(cols = c(successful, post),
+                      names_to = "variable", values_to = "estimate") %>%
+  mutate(se = ifelse(variable == "successful", successful_se, post_se))
+
+# Plot
+ggplot(plot_df, aes(x = model, y = estimate, color = source)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  geom_errorbar(aes(ymin = estimate - 1.96*se,
+                    ymax = estimate + 1.96*se),
+                width = 0.2, position = position_dodge(width = 0.5)) +
+  facet_wrap(~variable, scales = "free_y") +
+  labs(
+    title = "Table 8: Comparison Brodeur (2018) vs Replication",
+    x = "Model specification",
+    y = "Coefficient (with 95% CI)"
+  ) +
+  theme_minimal()
 
 ```
 
