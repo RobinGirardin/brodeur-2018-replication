@@ -12,6 +12,9 @@ library(fixest)
 library(knitr)
 library(htmltools)
 library(readr)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
 ```
 
 ```{r}
@@ -221,6 +224,32 @@ summary(es_mod)
 
 ```
 
+```{r}
+df.pta <- df_es_win |>
+				group_by(event_time, successful) |>
+				mutate(mean_ln_emp_pop = mean(ln_emp_pop, na.rm = TRUE),
+							 mean_ln_real_qp1_pop = mean(ln_real_qp1_pop, na.rm = TRUE)) |>
+				ungroup()
+
+p1 <- ggplot(
+			 data = df.pta,
+			 mapping = aes(x = event_time, y = mean_ln_emp_pop)) +
+				geom_line(mapping = aes(color = as.factor(successful))) +
+				scale_x_continuous(breaks = seq(-3, 3)) +
+				labs(color = "successful") +
+				ggtitle("Parallel Trend Assumption - Employement per capita")
+
+p2 <- ggplot(
+			 data = df.pta,
+			 mapping = aes(x = event_time, y = mean_ln_real_qp1_pop)) +
+				geom_line(mapping = aes(color = as.factor(successful))) +
+				scale_x_continuous(breaks = seq(-3, 3)) +
+				labs(color = "successful") +
+				ggtitle("Parallel Trend Assumption - Earnings per capita")
+
+p1 / p2
+```
+
 #### Interpretation
 
 The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
@@ -383,6 +412,29 @@ This section responds to the following questions:
 
 * How do your replication results compares to the results of the research paper?
 * Are there similar studies and how do your results compare to these results?
+
+## Other studies relating to Brodeur's work
+
+In positioning his contribution, Brodeur (2018) relates his work to a growing literature on the economic consequences of terrorism. He highlights the seminal studies by Abadie and Gardeazabal (2003, 2008), which show substantial economic costs of terrorism in the Basque Country and in cross-country settings, as well as Blomberg, Hess, and Orphanides (2004) and Enders and Sandler (2005), who document macroeconomic losses from terrorism. At the regional and sectoral level, Greenbaum, Dugan, and LaFree
+(2007) and Öcal and Yildirim (2010) study the local economic impacts of terror in Italy and Turkey. Brodeur also notes the literature on mechanisms through which terrorism affects economic outcomes, such as real estate markets (Besley and Mueller 2012; Abadie and Dermisi 2008) and well-being (Frey, Luechinger, and Stutzer 2007).
+
+His study complements this work by exploiting variation between successful and failed attacks at the U.S. county level, providing new micro-level evidence. A complete list of related studies cited in Brodeur (2018) is provided in the Appendix.
+
+## Recent literature on the economic consequences of Terrorism (Post - 2018)
+
+Research on the economic effects of terrorism has continued to grow since Brodeur (2018). While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms. This shows the continuing interest in understanding how terrorism shapes economies at different levels.
+
+* Meierrieks et al. (2025). “The effect of terrorism on economic inequality in democracies.” Finds that increased terrorist activity is associated with rising income inequality in democracies. [Science Direct Link](https://www.sciencedirect.com/science/article/pii/S0176268024001423?utm_source=chatgpt.com)
+
+* Bardwell & Mohib (2021). “The Economic Impact of Terrorism from 2000 to 2018.”
+Uses a cost-accounting approach to estimate global costs of terrorism (deaths, property damage, GDP losses). [De Gruyter link](https://www.degruyterbrill.com/document/doi/10.1515/peps-2020-0031/html?lang=en&srsltid=AfmBOorsQnmkbPkTmSKs5_1Zse2SPNAOumb-Sfibi7GjRCHBpPN5yI0u&utm_source=chatgpt.com)
+
+* Tingbani (2019). “Terrorism and country-level global business failure.” Examines how terrorism affects business failure at the national level. [ScienceDirect link](https://www.sciencedirect.com/science/article/abs/pii/S0148296318304211?utm_source=chatgpt.com)
+
+* Sandler (2025). “An Economic Perspective on Terrorism and Counterterrorism.” Provides a recent overview of the economics of terrorism and counterterrorism policies.
+[Taylor & Francis link](https://www.tandfonline.com/doi/abs/10.1080/09546553.2023.2259992?utm_source=chatgpt.com)
+
+* Brodeur (2022). “On the Economic Consequences of Mass Shootings.” Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact. [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
 
 # Appendix
 
