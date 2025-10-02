@@ -25,50 +25,24 @@ load("Brodeur (2018).RData")
 variable_table <- read_csv("variable_table.csv")
 ```
 
+Check data (in Console) and open variable_table \# Motivation
 
-Check data (in Console) and open variable_table
-# Motivation 
+The motivation section responds to the following questions:
 
-The motivation section responds to the following questions: 
+-   Why is the research question relevant?
+-   What are the main hypothesis?
 
-* Why is the research question relevant?
-* What are the main hypothesis?
+First, the research question is relevant because understanding the impact of terror attacks on employement isn't well established. Indeed, the data available to answer such question (subnational data) has only been collected in the recent years. Secondly, The difficult of the topic as well as the different channels make answering this question challenging and no consensus has been established yet. According to Mill (1848), nations should recover question when the direct impact on productive capital isn't substantial, while Becker and Murphy (2001) argues that the uncertainty about futur terror attacks makes their effect hard to estimate.
 
-First, the research question is relevant because understanding the impact of terror attacks on employement isn't well established.
-Indeed, the data available to answer such question (subnational data) has only been collected in the recent years.
-Secondly,  The difficult of the topic as well as the different channels make answering this question challenging and no consensus has been established yet.
-According to Mill (1848), nations should recover question when the direct impact on productive capital isn't substantial,
-while Becker and Murphy (2001) argues that the uncertainty about futur terror attacks makes their effect hard to estimate.
+Thirdly and most importantly, (percieved) costs of terror attacks are huge. Understand such impacts would benefit countries where terror attacks are proeminent, such as the United States of America, where the paper has been conducted.
 
-Thirdly and most importantly, (percieved) costs of terror attacks are huge.
-Understand such impacts would benefit countries where terror attacks are proeminent,
-such as the United States of America, where the paper has been conducted.
+More specifically, the paper investigates the direct impact of terror attacks on employement trough \* Employement rate, - General, through "100 x Log Employment (per capita)" - Industry-wise, trough \* 100 x Log Manufacturing Employment (per capita) \* 100 x Log Construction Employment (per capita) \* 100 x Log Retail Employment (per capita) \* 100 x Log Wholesale Employment (per capita) \* 100 x Log Services Employment (per capita) \* 100 x Log Finance Employment (per capita) \* Earning (locall, at the country scale), through - 100 x Log Real Earnings (per capita) - 100 x Log Real Earnings per Job
 
-More specifically, the paper investigates the direct impact of terror attacks on employement trough
-* Employement rate,
-  - General, through "100 x Log Employment (per capita)"
-  - Industry-wise, trough
-    * 100 x Log Manufacturing Employment (per capita)
-    * 100 x Log Construction Employment (per capita)
-    * 100 x Log Retail Employment (per capita)
-    * 100 x Log Wholesale Employment (per capita)
-    * 100 x Log Services Employment (per capita)
-    * 100 x Log Finance Employment (per capita)
-* Earning (locall, at the country scale), through
-  - 100 x Log Real Earnings (per capita)
-  - 100 x Log Real Earnings per Job
-
-as well as through potential channels, such as 
-* Destruciton of human and physiacal capital
-* Consumer and investment behavior
-* Housing Market
-* Migration
-* Counterterrorism expenditures
-
-
+as well as through potential channels, such as \* Destruciton of human and physiacal capital \* Consumer and investment behavior \* Housing Market \* Migration \* Counterterrorism expenditures
 
 ## Answers:
-1. Difficult topic, no consensus yet and interesting application prospects for states and country.
+
+1.  Difficult topic, no consensus yet and interesting application prospects for states and country.
 
 **2. Hypothesis**
 
@@ -82,50 +56,25 @@ We expect an effect of TA on the housing market, as a decrease of housing prices
 
 We expect an effect of TA on migration, as a TA worsen individual's living and working conditions.
 
-We expect an small effect of TA on counterterrorism expenditures, through moving ressources from productive sector to undproductive sector (security,...).
-Additionally, as counterterrorism expenditures are generaly at the federal and regional level, is it unclear if local (county) economy would affected would affected.
+We expect an small effect of TA on counterterrorism expenditures, through moving ressources from productive sector to undproductive sector (security,...). Additionally, as counterterrorism expenditures are generaly at the federal and regional level, is it unclear if local (county) economy would affected would affected.
 
 # Data sources
 
-This section responds to the following question: 
+This section responds to the following question:
 
-* Where does the data come from (country, time period, source).
-* What are the key variables?
-* How are those variable measured?
+-   Where does the data come from (country, time period, source).
+-   What are the key variables?
+-   How are those variable measured?
 
-First important source is the Global Terrorism Database (2017), firstly established a counselling company, Pinkerton Global Intelligence Services, and now maintained by 
-the National Consortium for the Study of Terrorism and Responses to Terrorism (START).
-Time period is 1970 to 2013. 1993 is missing because the box of data fell out of a truck during transit.
-Information sources are media articles, electronics news archive, and other existing datasets.
-Variable measurement is unkown, probably 'manual'.
-Main variables are 
-  - date,
-  - location (at the county level)
-  - description of each terror attack, allowing for cross-matching with other dataset with other datasets
-  - attack type (governement buildings, businesses, ...)
-  - weapons type (biological, explosives, incendiary, ...)
-  - number of deaths
-  - number of injured people
-  - property dammage
+First important source is the Global Terrorism Database (2017), firstly established a counselling company, Pinkerton Global Intelligence Services, and now maintained by the National Consortium for the Study of Terrorism and Responses to Terrorism (START). Time period is 1970 to 2013. 1993 is missing because the box of data fell out of a truck during transit. Information sources are media articles, electronics news archive, and other existing datasets. Variable measurement is unkown, probably 'manual'. Main variables are - date, - location (at the county level) - description of each terror attack, allowing for cross-matching with other dataset with other datasets - attack type (governement buildings, businesses, ...) - weapons type (biological, explosives, incendiary, ...) - number of deaths - number of injured people - property dammage
 
 **Note**, the SUCESSFULL variable was constructed using this dataset
 
-Second important dataset is Country Business Patterns (CBD) datasets, coming form the Business Register, maintained by the US Census Bureau.
-Time period is 1970 to 2013.
-Information sources is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firm is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firms.
-Variable measurement is then admininstrative or survey.
-Main variables are:
-  - number of establishements
-  - establishement location
-  - employement during the middle of March
-  - quarter payroll
-  - annual payroll
+Second important dataset is Country Business Patterns (CBD) datasets, coming form the Business Register, maintained by the US Census Bureau. Time period is 1970 to 2013. Information sources is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firm is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firms. Variable measurement is then admininstrative or survey. Main variables are: - number of establishements - establishement location - employement during the middle of March - quarter payroll - annual payroll
 
 **Note**, Governement, military employement, rail transportation, household employement industries are present.
 
-An additionnal datasets was used to compare finding and test their robustness, the Bureau of Economic Analysis (BEA).
-Main Variables:
-- Number of jobs in a country
+An additionnal datasets was used to compare finding and test their robustness, the Bureau of Economic Analysis (BEA). Main Variables: - Number of jobs in a country
 
 Governement and military employement were added to facility comparison.
 
@@ -135,30 +84,25 @@ Governement and military employement were added to facility comparison.
 
 This section responds to the following questions:
 
-* What are teh assumptions of the method
-* Are those assumptions plausible in this example?
+-   What are teh assumptions of the method
+-   Are those assumptions plausible in this example?
 
-The targetted analysis of the project is the Difference-in-Difference Method.
-This method has the following assumptions: 
+The targetted analysis of the project is the Difference-in-Difference Method. This method has the following assumptions:
 
-1. Stable Unit Treatment Value Assumption (SUTVA)
-2. Treatment randomness assignement
-3. Parallel Trend Assumption
-4. Exogeneity, which is often implies the *3.* holds.
+1.  Stable Unit Treatment Value Assumption (SUTVA)
+2.  Treatment randomness assignement
+3.  Parallel Trend Assumption
+4.  Exogeneity, which is often implies the *3.* holds.
 
 ## SUTVA
 
-Bordeur tests for spillover effects by aggregating to broader Census regions (9 divisions).
-'Division' is not a cofounder for employement rate and SUCCESSFUL
+Bordeur tests for spillover effects by aggregating to broader Census regions (9 divisions). 'Division' is not a cofounder for employement rate and SUCCESSFUL
 
-Additionnaly, he tests local spill-over effects by testing the effects of the successfull TA on neighboring counties.
-He found neglibile and idiosyncratic effects, hence this assumption is respected.
+Additionnaly, he tests local spill-over effects by testing the effects of the successfull TA on neighboring counties. He found neglibile and idiosyncratic effects, hence this assumption is respected.
 
 ## Treatment randomness assignement
 
-Is the successfulness of an attack predictable or can we anticipate it?
-This is likely not the case since the sample of county-year observation hosting successful and failed terror
-are balanced across a void range of characteristics.
+Is the successfulness of an attack predictable or can we anticipate it? This is likely not the case since the sample of county-year observation hosting successful and failed terror are balanced across a void range of characteristics.
 
 Additionnaly, given a particular location, the successfulness or failure of a TA can be considered random.
 
@@ -166,9 +110,12 @@ Additionnaly, given a particular location, the successfulness or failure of a TA
 
 ## Parallel Trend Assumption
 
+### Define year of attack (failed or successful)
+
 ```{r}
 #| label: Year of event
-load("Brodeur (2018).RData")
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 # Step 1: Get the event year (first 0->1 edge in post) and success status for each county.
 ev_info <- df %>%
@@ -191,11 +138,13 @@ df_es_win <- df_es %>% filter(event_time >= -3, event_time <= 3)
 
 ```
 
-#### Plot to check parallel trend assumption
+### Plot to check parallel trend assumption (1/2)
 
 ```{r}
 #| label: iPlot
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 es_mod <- feols(
   ln_emp_pop ~ i(event_time, is_success, ref = -1) | fips + year,
@@ -206,8 +155,7 @@ iplot(es_mod,
       main = "Event study (successful vs failed): parallel-trend check",
       xlab = "Years relative to event (ref = -1)",
       ref.line = 0)
-
-summary(es_mod)
+      
 # tidy_es <- broom::tidy(es_mod, conf.int = TRUE) %>%
 #   filter(str_detect(term, "^event_time::")) %>%
 #   mutate(event_time = as.numeric(str_match(term, "event_time::(-?\\d+)")[,2]))
@@ -223,6 +171,51 @@ summary(es_mod)
 #   theme_minimal()
 
 ```
+
+### Interpretation
+
+The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
+
+Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
+
+### Plot to check parallel trend assumption (2/2)
+
+```{r}
+#| label: ParallelTrendPlot
+#| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
+
+# Aggregate data: means for each event_time and is_success
+plot_data <- df_es_win %>%
+  group_by(event_time, is_success) %>%
+  summarise(
+    mean_ln_emp_pop = mean(ln_emp_pop, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Make plot
+ggplot(plot_data, aes(x = event_time, y = mean_ln_emp_pop, 
+                      color = factor(is_success))) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
+  scale_color_manual(
+    values = c("0" = "darkgreen", "1" = "red"),
+    labels = c("0" = "Failed", "1" = "Successful"),
+    name = "Attack Status"
+  ) +
+  labs(
+    title = "Employment trends: Successful vs Failed attacks",
+    x = "Years relative to event",
+    y = "Mean log(Employment/Population)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+```
+
+### This Plot is not working yet
 
 ```{r}
 df.pta <- df_es_win |>
@@ -250,39 +243,22 @@ p2 <- ggplot(
 p1 / p2
 ```
 
-#### Interpretation
-
-The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
-
-Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
-
 ## Exogeneity
 
-Brodeur includes year fixed effects (absorbing nationwide shocks such as recessions) and month fixed effects (seasonality)
-He also includes county fixed effects absorbing time-invariant county heterogeneity.
-Together, these control for common macro shocks.
+Brodeur includes year fixed effects (absorbing nationwide shocks such as recessions) and month fixed effects (seasonality) He also includes county fixed effects absorbing time-invariant county heterogeneity. Together, these control for common macro shocks.
 
-He also add condition the analysis on common possible covariate to avoid cofounder effects, such as 
-the attack type of the weapon type.
+He also add condition the analysis on common possible covariate to avoid cofounder effects, such as the attack type of the weapon type.
 
 # Descriptive Statistics
 
 Here are the main key points of the paper Section III - Descriptive statistics.
 
-* About 86% of county-year observations involve at least one successful terror attack.
-* Around 30% of observations feature more than one attempted attack in the same year/county.
+-   About 86% of county-year observations involve at least one successful terror attack.
+-   Around 30% of observations feature more than one attempted attack in the same year/county.
 
-Concerning casualities, for successful terror attacks,
-the average amount of death is 4.2 for 3.4 injured, 
-while for failed terror attacks, the average death rate is 0.3 for 2.4 injured.
-Those estimates excludes Oklahoma City bombing and September 11, 2001.
+Concerning casualities, for successful terror attacks, the average amount of death is 4.2 for 3.4 injured, while for failed terror attacks, the average death rate is 0.3 for 2.4 injured. Those estimates excludes Oklahoma City bombing and September 11, 2001.
 
-Concerning property dammage, the mean dammage is approximately 750000$.
-However, the property dammage is unkown for more than 2/3 of the sample.
-For 25% of the unkown property dammage, another variable qualitatively evaluate said dommage in 3 categories:
-* Catastrophic (> $1 billion)
-* Major ($1 million – $1 billion), approx. 40 TA
-* Minor (< $1 million)
+Concerning property dammage, the mean dammage is approximately 750000\$. However, the property dammage is unkown for more than 2/3 of the sample. For 25% of the unkown property dammage, another variable qualitatively evaluate said dommage in 3 categories: \* Catastrophic (\> \$1 billion) \* Major (\$1 million – \$1 billion), approx. 40 TA \* Minor (\< \$1 million)
 
 Concerning attack types, the most common attacks types are bombing/explosives and infrastructure attacks (arson, sabotage).
 
@@ -294,28 +270,23 @@ Conerning weapons, vast majority of attacks are explosives and incendiaries.
 
 This section responds to the following questions:
 
-* What are the main results
-* Are they plausible?
-* How robust the result are to changing samples?
+-   What are the main results
+-   Are they plausible?
+-   How robust the result are to changing samples?
 
 ## Result of the basic model:
 
-**log(job/pop) ~ SUCCESS + n_attacks | year+month+county:**
+**log(job/pop) \~ SUCCESS + n_attacks \| year+month+county:**
 
-The first important information is that effect of fixed-effects variable are not significant.
-There is a significant dip of 1% after a TA on job/population.
-Such effect is significant for first 2 years following a TA.
+The first important information is that effect of fixed-effects variable are not significant. There is a significant dip of 1% after a TA on job/population. Such effect is significant for first 2 years following a TA.
 
-**log(job/pop) ~ SUCCESS + n_attacks + attack_type + weapon_type | year + month + county:**
+**log(job/pop) \~ SUCCESS + n_attacks + attack_type + weapon_type \| year + month + county:**
 
+No real change from the previous model without attack type and weapon type. Drop of log(job/(population)) between 0.9 to 1.4%
 
-No real change from the previous model without attack type and weapon type.
-Drop of log(job/(population)) between 0.9 to 1.4%
+**log(real earning per capita) \~SUCCESS + n_attacks + attack_type + weapon_type \| year + month + county**
 
-**log(real earning per capita) ~SUCCESS + n_attacks + attack_type + weapon_type | year + month + county**
-
-Estimates are positives before the attacks and negative after, droping by 1 to 3%.
-Those effects are significant at the 1% level.
+Estimates are positives before the attacks and negative after, droping by 1 to 3%. Those effects are significant at the 1% level.
 
 ## Difference-in-Difference Model
 
@@ -333,9 +304,7 @@ $$
 Y_{c,t} = \alpha + \eta + \zeta * POST_{c,t} + \theta_c + \delta_t + \epsilon_{c,t}
 $$
 
-Significant effect of $POST$ at the 1% significant level.
-This suggest that the attemps of an attack itself, and not necessarily its success,
-drives employement down.
+Significant effect of $POST$ at the 1% significant level. This suggest that the attemps of an attack itself, and not necessarily its success, drives employement down.
 
 **Second Model**
 
@@ -343,39 +312,33 @@ $$
 Y_{c,t} = \alpha + \eta * SUCESSFULL_{c,t} + \zeta * POST_{c,t} + \theta_c + \delta_t + \epsilon_{c,t}
 $$
 
-Direct comparison with the first model but including the SUCESSFUL variable.
-Sucessful TA reduce employement by 2%, effect statistically significant at the 5% level.
+Direct comparison with the first model but including the SUCESSFUL variable. Sucessful TA reduce employement by 2%, effect statistically significant at the 5% level.
 
 **Third to Six Model**
 
-Variable such as 'non-american' target and 'logistically international',
-as well as another variable absorbing employement shocks are statistically significant at the 5% level.
+Variable such as 'non-american' target and 'logistically international', as well as another variable absorbing employement shocks are statistically significant at the 5% level.
 
 #### Plausibility
 
-There is a significant negative effect of successfulness of an attack on job/capita.
-The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimateThe standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate.
+There is a significant negative effect of successfulness of an attack on job/capita. The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimateThe standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate.
 
 ### Earnings per capita
 
-Dependent variable: 100 * log(earnings/capita)
+Dependent variable: 100 \* log(earnings/capita)
 
-SUCCESSFUL has an effect at conventional level (?). 
+SUCCESSFUL has an effect at conventional level (?).
 
 #### Plausibility
-if the significance levels is 10%, then it is small. However, standard errors are half as big as the estimates, indicating that the estimates is relatively close to the true SUCCESSFUL estimates.
-Otherwise, effect at 5% is commendable.
+
+if the significance levels is 10%, then it is small. However, standard errors are half as big as the estimates, indicating that the estimates is relatively close to the true SUCCESSFUL estimates. Otherwise, effect at 5% is commendable.
 
 ### Earnings per jobs
 
-No effect at the 10% levels, hence 'effect' of aggregated earnings but not per jobs.
-Could there be a covariate explaining this?
+No effect at the 10% levels, hence 'effect' of aggregated earnings but not per jobs. Could there be a covariate explaining this?
 
-#### Plausibility 
+#### Plausibility
 
-A significant effect on the 10% level is debatable.
-Additionnaly, the effect on aggregated earnings but not per job means there is likely a covariate involved.
-Hence the result aren't really plausible.
+A significant effect on the 10% level is debatable. Additionnaly, the effect on aggregated earnings but not per job means there is likely a covariate involved. Hence the result aren't really plausible.
 
 ## Result Robustness
 
@@ -383,58 +346,178 @@ To check for estimates robustness, Brodeur squared the number of attacks, which 
 
 Analysis and models includes different variables and effects, ensuring robustness of the estimates with respect to potential covariates.
 
-In Appendix A8 and A9, he purposefully omits a single year of the data to see wehter the result are influence by few observation.
-Since the data spans 44 years, 44 OLS models, each excluding a particular year of the data, were run.
-There were no changes in effect.
+In Appendix A8 and A9, he purposefully omits a single year of the data to see wehter the result are influence by few observation. Since the data spans 44 years, 44 OLS models, each excluding a particular year of the data, were run. There were no changes in effect.
 
-Estimates and effect are also not driven by attacks on ambiguous locations (hijacking/hostage, mail-based attack).
-Also, omitting catastrophic property dommages (outliers) don't affect estimate and effects.
+Estimates and effect are also not driven by attacks on ambiguous locations (hijacking/hostage, mail-based attack). Also, omitting catastrophic property dommages (outliers) don't affect estimate and effects.
 
-Checking for effects or organization behind the attacks by omitting each of them revealed no change in 
-estimate and effects.
+Checking for effects or organization behind the attacks by omitting each of them revealed no change in estimate and effects.
 
-Additionnaly, and importantly, there is no evidence that successful attacks lead of the migration out of the county different that 0.
-Hence, estimate and effects aren't likely biased by migration.
+Additionnaly, and importantly, there is no evidence that successful attacks lead of the migration out of the county different that 0. Hence, estimate and effects aren't likely biased by migration.
 
-However, the result and analysis cannot be generalized to other countries, as it is solely based on USA data.
-Indeed, USA economy, housing markets and culture is quite unite, hence extrapolating the result to other countries is a mistake.
+However, the result and analysis cannot be generalized to other countries, as it is solely based on USA data. Indeed, USA economy, housing markets and culture is quite unite, hence extrapolating the result to other countries is a mistake.
 
+**Summary on robustness**
 
-**Conclusion**
-
-The result are robust to many different samples. Change in samples didn't lead to difference in effects.
-Results aren't likely driven by outliers in property dommages, particularly gruesom years, ambiguous location.
-Results aren't likely driven by particular terrorist groups.
+The result are robust to many different samples. Change in samples didn't lead to difference in effects. Results aren't likely driven by outliers in property dommages, particularly gruesom years, ambiguous location. Results aren't likely driven by particular terrorist groups.
 
 # Conclusion
 
 This section responds to the following questions:
 
-* How do your replication results compares to the results of the research paper?
-* Are there similar studies and how do your results compare to these results?
+-   How do your replication results compares to the results of the research paper?
+-   Are there similar studies and how do your results compare to these results?
 
-## Other studies relating to Brodeur's work
+## Comparison of replication results with published results
 
-In positioning his contribution, Brodeur (2018) relates his work to a growing literature on the economic consequences of terrorism. He highlights the seminal studies by Abadie and Gardeazabal (2003, 2008), which show substantial economic costs of terrorism in the Basque Country and in cross-country settings, as well as Blomberg, Hess, and Orphanides (2004) and Enders and Sandler (2005), who document macroeconomic losses from terrorism. At the regional and sectoral level, Greenbaum, Dugan, and LaFree
-(2007) and Öcal and Yildirim (2010) study the local economic impacts of terror in Italy and Turkey. Brodeur also notes the literature on mechanisms through which terrorism affects economic outcomes, such as real estate markets (Besley and Mueller 2012; Abadie and Dermisi 2008) and well-being (Frey, Luechinger, and Stutzer 2007).
+We compared our replication results to those published in Brodeur (2018).\
+Overall, our findings are **nearly identical** to the original across all three tables, with only very small differences in standard errors, R² values, and sample size.
 
-His study complements this work by exploiting variation between successful and failed attacks at the U.S. county level, providing new micro-level evidence. A complete list of related studies cited in Brodeur (2018) is provided in the Appendix.
+### Table 6 (ln_emp_pop)
 
-## Recent literature on the economic consequences of Terrorism (Post - 2018)
+-   **Successful attack:** Our coefficients (−2.00, −1.98, −2.19, −1.99, −1.82) match Brodeur’s (−1.995, −1.983, −2.191, −1.986, −1.818) almost exactly.\
+-   **Post-attack:** Estimates also align perfectly (e.g. −1.09 vs −1.087).\
+-   **Standard errors:** Slightly smaller in our replication (0.85–0.90 vs 0.88–0.94).\
+-   **R²:** Marginally higher (0.968–0.979 vs 0.965–0.971).
+
+➡️ Substantive interpretation: identical results, slightly stronger significance in our replication.
+
+------------------------------------------------------------------------
+
+### Table 7 (ln_emp_finance_pop)
+
+-   **Successful attack:** Point estimates match perfectly (e.g. −5.06, −5.53, −4.30, −4.90, −4.26, −4.69).\
+-   **Post-attack:** Identical coefficients (e.g. 2.51, 2.64, 3.28, 3.81, 3.46, 3.54).\
+-   **Standard errors:** Again, somewhat smaller in our replication (1.7–2.1 vs 1.8–2.2). This leads to additional statistical significance in some models.\
+-   **R²:** Slightly higher in our replication (0.926–0.952 vs 0.916–0.946).\
+-   **Observations:** Almost the same, differing by at most 4 observations across specifications.
+
+➡️ Substantive interpretation: coefficients identical, results fully robust to replication, with slightly stronger statistical evidence.
+
+------------------------------------------------------------------------
+
+### Table 8 (ln_hh_index, housing prices)
+
+-   **Successful attack:** Our coefficients (−1.79, −1.69, −1.70, −2.15, −1.31) match Brodeur’s almost exactly.\
+-   **Post-attack:** First column (−2.31) matches perfectly; other estimates (−1.38 to 0.10) are also very close.\
+-   **Standard errors:** Slightly smaller in our replication (e.g. 1.01 vs 1.07, 0.69 vs 0.72).\
+-   **R²:** Marginally higher (0.946–0.983 vs 0.940–0.976).\
+-   **Observations:** Our sample slightly smaller (3,444–3,463 vs 3,465).
+
+➡️ Substantive interpretation: effects on housing prices are reproduced very closely; minor deviations plausibly stem from NA-handling and software.
+
+➡️ **Important note**: The table 8 models are calculated with `successful1` instead of `successful`. This means that the year of the event is regarded as treated. We assume Brodeur has done this because house prices **react faster** than the other economical variables in tables 6 and 7 **and/or** that he knows that the housing index he uses **lags one year** (e.g. not an average over the year but the based on house prices at the end of the year).
+
+------------------------------------------------------------------------
+
+### Visual Summary
+
+|                  | Brodeur (2018)         | Our Replication | Difference       |
+|------------------|-------------------|------------------|------------------|
+| **Coefficients** | Identical (Tables 6–8) | Identical       | None             |
+| **Std. Errors**  | 0.60–2.25              | 0.53–2.13       | Slightly smaller |
+| **R²**           | 0.916–0.976            | 0.926–0.983     | Slightly higher  |
+| **N**            | \~3,093–4,414          | \~3,089–4,406   | Max −21          |
+
+------------------------------------------------------------------------
+
+**Conclusion:**\
+Our replication reproduces Brodeur’s key results across employment, finance, and housing with **remarkable precision**. Differences are limited to slightly smaller standard errors, higher R², and marginally fewer observations, **most likely due to software and NA-handling**. The main findings — negative employment and housing effects of successful terrorist attacks, alongside distinct post-attack dynamics — are **fully confirmed**.
+
+```{r}
+#| label: ComparisonTables8
+#| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
+
+# Example: Brodeur vs. Replication, Table 8
+brodeur_tbl8 <- tibble(
+  model = paste0("Col", 1:5),
+  successful = c(-1.79, -1.69, -1.70, -2.15, -1.31),
+  successful_se = c(1.09, 1.09, 1.02, 1.07, 0.70),
+  post = c(-2.31, -1.38, -1.39, -1.09, -0.09),
+  post_se = c(0.60, 0.75, 0.73, 0.72, 0.80)
+)
+
+rep_tbl8 <- tibble(
+  model = paste0("Col", 1:5),
+  successful = c(-1.79, -1.69, -1.70, -2.15, -1.31),
+  successful_se = c(1.04, 1.04, 0.984, 1.01, 0.665),
+  post = c(-2.31, -1.38, -1.39, -1.09, -0.091),
+  post_se = c(0.575, 0.717, 0.697, 0.687, 0.756)
+)
+
+# Combine for ggplot
+plot_df <- bind_rows(
+  brodeur_tbl8 %>% mutate(source = "Brodeur (2018)"),
+  rep_tbl8 %>% mutate(source = "Replication")
+) %>%
+  pivot_longer(cols = c(successful, post),
+                      names_to = "variable", values_to = "estimate") %>%
+  mutate(se = ifelse(variable == "successful", successful_se, post_se))
+
+# Plot
+ggplot(plot_df, aes(x = model, y = estimate, color = source)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  geom_errorbar(aes(ymin = estimate - 1.96*se,
+                    ymax = estimate + 1.96*se),
+                width = 0.2, position = position_dodge(width = 0.5)) +
+  facet_wrap(~variable, scales = "free_y") +
+  labs(
+    title = "Table 8: Comparison Brodeur (2018) vs Replication",
+    x = "Model specification",
+    y = "Coefficient (with 95% CI)"
+  ) +
+  theme_minimal()
+
+```
+
+## Relating Brodeur (2018) to other studies, Pre- and Post-2018
+
+### How Brodeur positions his work (Pre-2018)
+
+Brodeur (2018) situates his contribution within a growing body of work on the economic consequences of terrorism. He highlights seminal studies by Abadie and Gardeazabal (2003, 2008), which document substantial economic costs of terrorism in the Basque Country and across countries, and by Blomberg, Hess, and Orphanides (2004) as well as Enders and Sandler (2005), who show macroeconomic losses. At the regional and sectoral level, Greenbaum, Dugan, and LaFree (2007) and Öcal and Yildirim (2010) examine local economic impacts in Italy and Turkey. Mechanisms through which terrorism affects specific outcomes have also been studied, such as real estate markets (Besley & Mueller 2012; Abadie & Dermisi 2008) and well-being (Frey, Luechinger & Stutzer 2007).
+
+Brodeur complements this earlier macro-level research by exploiting variation between successful and failed attacks at the U.S. county level, providing new micro-level causal evidence. This positions his work as a **methodological innovation** that later studies could build upon.
+
+### Recent Literature on the Economic Consequences of Terrorism (Post-2018)
 
 Research on the economic effects of terrorism has continued to grow since Brodeur (2018). While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms. This shows the continuing interest in understanding how terrorism shapes economies at different levels.
 
-* Meierrieks et al. (2025). “The effect of terrorism on economic inequality in democracies.” Finds that increased terrorist activity is associated with rising income inequality in democracies. [Science Direct Link](https://www.sciencedirect.com/science/article/pii/S0176268024001423?utm_source=chatgpt.com)
+### Selected Studies After 2018
 
-* Bardwell & Mohib (2021). “The Economic Impact of Terrorism from 2000 to 2018.”
-Uses a cost-accounting approach to estimate global costs of terrorism (deaths, property damage, GDP losses). [De Gruyter link](https://www.degruyterbrill.com/document/doi/10.1515/peps-2020-0031/html?lang=en&srsltid=AfmBOorsQnmkbPkTmSKs5_1Zse2SPNAOumb-Sfibi7GjRCHBpPN5yI0u&utm_source=chatgpt.com)
+-   **Meierrieks et al. (2025). “The effect of terrorism on economic inequality in democracies.”**\
+    Finds that increased terrorist activity is associated with rising income inequality in democracies.\
+    [ScienceDirect link](https://www.sciencedirect.com/science/article/pii/S0176268024001423?utm_source=chatgpt.com)
 
-* Tingbani (2019). “Terrorism and country-level global business failure.” Examines how terrorism affects business failure at the national level. [ScienceDirect link](https://www.sciencedirect.com/science/article/abs/pii/S0148296318304211?utm_source=chatgpt.com)
+-   **Bardwell & Mohib (2021). “The Economic Impact of Terrorism from 2000 to 2018.”**\
+    Uses a cost-accounting approach to estimate global costs of terrorism (deaths, property damage, GDP losses).\
+    [De Gruyter link](https://www.degruyterbrill.com/document/doi/10.1515/peps-2020-0031/html?lang=en&srsltid=AfmBOorsQnmkbPkTmSKs5_1Zse2SPNAOumb-Sfibi7GjRCHBpPN5yI0u&utm_source=chatgpt.com)
 
-* Sandler (2025). “An Economic Perspective on Terrorism and Counterterrorism.” Provides a recent overview of the economics of terrorism and counterterrorism policies.
-[Taylor & Francis link](https://www.tandfonline.com/doi/abs/10.1080/09546553.2023.2259992?utm_source=chatgpt.com)
+-   **Tingbani (2019). “Terrorism and country-level global business failure.”**\
+    Examines how terrorism affects business failure at the national level.\
+    [ScienceDirect link](https://www.sciencedirect.com/science/article/abs/pii/S0148296318304211?utm_source=chatgpt.com)
 
-* Brodeur (2022). “On the Economic Consequences of Mass Shootings.” Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact. [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
+-   **Sandler (2025). “An Economic Perspective on Terrorism and Counterterrorism.”**\
+    Provides a recent overview of the economics of terrorism and counterterrorism policies.\
+    [Taylor & Francis link](https://www.tandfonline.com/doi/abs/10.1080/09546553.2023.2259992?utm_source=chatgpt.com)
+
+-   **Brodeur (2022). “On the Economic Consequences of Mass Shootings.”**\
+    Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact.\
+    [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
+
+### How New Studies Relate to Brodeur (2018)
+
+Two recent studies explicitly build on Brodeur (2018), using his distinction between successful and failed attacks as a source of causal identification:
+
+-   **Amarasinghe (2023), Journal of Development Economics**\
+    Adopts Brodeur’s *successful vs. failed* design to study the effects of terrorism on **public sentiment**, showing clear impacts on trust and social mood.
+
+-   **Chen (2025), Journal of Population Economics**\
+    Cites Brodeur to argue that successful attacks produce larger economic damage, and finds evidence of “**rally-around-the-flag**” dynamics in political and social outcomes, i.e. a temporary surge in public support for government and leaders following external threats.
+
+### Summary of our literature research
+
+Taken together with our replication, which confirms Brodeur’s original findings on employment, finance, and housing markets, and the newer studies that extend his design to outcomes such as sentiment, politics, and inequality, the picture is clear: the **successful vs. failed attack** framework has become a **methodological benchmark** in the literature. Our work verifies the original microeconomic effects with high precision and shows their continued relevance as research expands into broader economic and social domains. The central insight — that successful attacks carry significantly greater local economic costs — remains **consistent across studies**.
 
 # Appendix
 
@@ -445,6 +528,8 @@ Uses a cost-accounting approach to estimate global costs of terrorism (deaths, p
 ```{r}
 #| label: table6Models
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 df_sub <- df %>%
   filter(!is.na(successful))
@@ -586,6 +671,8 @@ m6C6 <- feols(
 
 ```{r}
 #| label: tableCommons
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 # define common table properties
 dict_common <- c(
@@ -617,6 +704,8 @@ order_common <- c(
 ```{r}
 #| label: Table6PanelA
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab6A <- etable(list(m6A1, m6A2, m6A3, m6A4, m6A5, m6A6),
        se.below = TRUE,
@@ -635,6 +724,8 @@ knitr::kable(tab6A, format = "pipe")
 ```{r}
 #| label: Table6PanelB
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab6B <- etable(list(m6B1, m6B2, m6B3, m6B4, m6B5, m6B6),
        se.below = TRUE,
@@ -653,6 +744,8 @@ knitr::kable(tab6B, format = "pipe")
 ```{r}
 #| label: Table6PanelC
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab6C <- etable(list(m6C1, m6C2, m6C3, m6C4, m6C5, m6C6),
        se.below = TRUE,
@@ -673,6 +766,8 @@ knitr::kable(tab6C, format = "pipe")
 ```{r}
 #| label: table7Models
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 df_sub <- df %>%
   filter(!is.na(successful))
@@ -770,6 +865,8 @@ m7B6 <- feols(
 ```{r}
 #| label: Table7PanelA
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab7A <- etable(list(m7A1, m7A2, m7A3, m7A4, m7A5, m7A6),
        se.below = TRUE,
@@ -788,6 +885,8 @@ knitr::kable(tab7A, format = "pipe")
 ```{r}
 #| label: Table7PanelB
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab7B <- etable(list(m7B1, m7B2, m7B3, m7B4, m7B5, m7B6),
        se.below = TRUE,
@@ -810,9 +909,11 @@ First we have to calculate the ln of the housing index (assuming the variable in
 ```{r}
 #| label: table8Models
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 df_sub <- df %>%
-  filter(!is.na(successful)) %>% 
+  filter(!is.na(successful1)) %>% 
   mutate(ln_hh_index = 100 * log(housing_index))
 
 # Panel A – Brodeur Table 6
@@ -823,19 +924,19 @@ m8A1 <- feols(
 )
 
 m8A2 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + year + month,
   cluster = ~fips, data = df_sub
 )
 
 m8A3 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + year + month + non_us_t + int_l,
   cluster = ~fips, data = df_sub
 )
 
 m8A4 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + year + month + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
     ww_firearm + ww_explo + ww_incend,
@@ -843,7 +944,7 @@ m8A4 <- feols(
 )
 
 m8A5 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + month^year + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
     ww_firearm + ww_explo + ww_incend,
@@ -851,7 +952,7 @@ m8A5 <- feols(
 )
 
 m8A6 <- feols(
-  ln_hh_index ~ successful + post + meventperyear |
+  ln_hh_index ~ successful1 + post + meventperyear |
     fips + month^year + div_9_all^year + non_us_t + int_l +
     aa_assass + aa_armed + aa_bomb + aa_facility +
     ww_firearm + ww_explo + ww_incend,
@@ -868,6 +969,8 @@ m8A6 <- feols(
 ```{r}
 #| label: Table8PanelA
 #| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 tab8A <- etable(list(m8A1, m8A2, m8A3, m8A4, m8A5, m8A6),
        se.below = TRUE,
@@ -880,3 +983,47 @@ knitr::kable(tab8A, format = "pipe")
 # html_print(HTML(kable(tab8A, "html")))
 
 ```
+
+### Literature cited in Brodeur (2018)
+
+#### Macroeconomic effects
+
+-   Abadie & Gardeazabal (2003) – Basque Country (pp. 246–247)\
+-   Abadie & Gardeazabal (2008) – Terrorism and the world economy (pp. 280–281)\
+-   Blomberg, Hess & Orphanides (2004) – Macroeconomic consequences of terrorism (pp. 246–247)\
+-   Crain & Crain (2006) – Terrorized economies (pp. 246–247, 281)\
+-   Enders, Sandler & Parise (1992) – Terrorism and tourism (p. 249)\
+-   Enders & Sandler (2005) – After 9/11 (p. 249)\
+-   Enders, Sandler & Gaibulloev (2011) – Domestic vs transnational terrorism (p. 249)\
+-   Enders, Hoover & Sandler (2016) – Terrorism and growth (p. 246)\
+-   Gaibulloev & Sandler (2008) – Growth consequences in Western Europe (p. 246)\
+-   Gaibulloev, Sandler & Sul (2014) – Dynamic panel analysis (p. 246)\
+-   Gries, Krieger & Meierrieks (2011) – Terrorism and growth (p. 246)\
+-   Meierrieks & Gries (2013) – Terrorism and growth (p. 246)\
+-   Tavares (2004) – Terrorism and open economies (p. 246)
+
+#### Regional / local effects
+
+-   Öcal & Yildirim (2010) – Turkey (p. 246)\
+-   Greenbaum, Dugan & LaFree (2007) – Italy (pp. 246, 282)\
+-   Landes (1978) – Aircraft hijacking (p. 249)\
+-   Ratcliffe & von Hinke (2015) – London bombings (pp. 249, 281)
+
+#### Channels / mechanisms
+
+-   Becker & Murphy (2001) – Uncertainty after terror (p. 246)\
+-   Becker & Rubinstein (2011) – Fear and response (pp. 270–271)\
+-   Frey, Luechinger & Stutzer (2007) – Costs of terrorism / life satisfaction (pp. 249, 281)\
+-   Besley & Mueller (2012) – Violence and house prices (pp. 249, 281)\
+-   Glaeser & Shapiro (2002) – Terrorism and urban form (pp. 249, 282)\
+-   Abadie & Dermisi (2008) – Terrorism and real estate (p. 280)\
+-   Benmelech, Berrebi & Klor (2010, 2012) – Terrorism costs and suicide terrorism (p. 281)
+
+#### Other relevant studies
+
+-   Di Tella & Schargrodsky (2004) – Police after attacks (pp. 249, 281)\
+-   Draca, Machin & Witt (2011) – London terror and crime (pp. 249, 281)\
+-   Klick & Tabarrok (2005) – Police and terror alert levels (p. 249)\
+-   Krueger & Malečková (2003); Krueger (2007) – Causes of terrorism (p. 249)\
+-   Mitra, Pham & Bandyopadhyay (2017) – Terror and air passenger transport (p. 281)\
+-   Ratcliffe & von Hinke (2015) – London bombings and prejudice (p. 281)
