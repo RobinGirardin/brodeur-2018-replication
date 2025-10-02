@@ -613,7 +613,7 @@ Overall, our findings are **nearly identical** to the original across all three 
 ### Visual Summary
 
 |                  | Brodeur (2018)         | Our Replication | Difference       |
-|------------------|--------------------|------------------|------------------|
+|------------------|-------------------|------------------|------------------|
 | **Coefficients** | Identical (Tables 6–8) | Identical       | None             |
 | **Std. Errors**  | 0.60–2.25              | 0.53–2.13       | Slightly smaller |
 | **R²**           | 0.916–0.976            | 0.926–0.983     | Slightly higher  |
@@ -734,7 +734,7 @@ df_es_win <- df_es %>% filter(event_time >= -3, event_time <= 3)
 
 ```
 
-#### Plot to check parallel trend assumption
+#### Plot to check parallel trend assumption (1/2)
 
 ```{r}
 #| label: iPlot
@@ -768,7 +768,19 @@ iplot(es_mod,
 
 ```
 
+#### Interpretation
+
+The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
+
+Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
+
+#### Plot to check parallel trend assumption (2/2)
+
 ```{r}
+#| label: ParallelTrendPlot
+#| message: false
+#| code-fold: true
+#| code-summary: "Click to expand code"
 
 # Aggregate data: means for each event_time and is_success
 plot_data <- df_es_win %>%
@@ -799,12 +811,6 @@ ggplot(plot_data, aes(x = event_time, y = mean_ln_emp_pop,
 
 ```
 
-#### Interpretation
-
-The pre-treatment coefficients (t = −3, −2) are close to zero and statistically indistinguishable from zero, supporting the parallel trend assumption.
-
-Starting from t = +1, coefficients turn negative, suggesting that counties experiencing a successful attack face lower employment growth relative to counties with failed attacks, although estimates are imprecisely estimated.
-
 ## Robustness of effects
 
 Brodeur presents several robustness checks in **Section IV.C (pp. 270–272)**:
@@ -818,17 +824,17 @@ Brodeur presents several robustness checks in **Section IV.C (pp. 270–272)**:
 
 **Conclusion:** The results are robust to data source, sample restrictions, exclusion of catastrophic outliers, and alternative specifications.
 
-## Other Studies Brodeur relates to in his paper
+## Relating Brodeur (2018) to other studies, Pre- and Post-2018
 
-In positioning his contribution, Brodeur (2018) relates his work to a growing literature on the economic consequences of terrorism. He highlights the seminal studies by Abadie and Gardeazabal (2003, 2008), which show substantial economic costs of terrorism in the Basque Country and in cross-country settings, as well as Blomberg, Hess, and Orphanides (2004) and Enders and Sandler (2005), who document macroeconomic losses from terrorism. At the regional and sectoral level, Greenbaum, Dugan, and LaFree (2007) and Öcal and Yildirim (2010) study the local economic impacts of terror in Italy and Turkey. Brodeur also notes the literature on mechanisms through which terrorism affects economic outcomes, such as real estate markets (Besley and Mueller 2012; Abadie and Dermisi 2008) and well-being (Frey, Luechinger, and Stutzer 2007).
+### How Brodeur positions his work (Pre-2018)
 
-His study complements this work by exploiting variation between successful and failed attacks at the U.S. county level, providing new micro-level evidence. A complete list of related studies cited in Brodeur (2018) is provided in the Appendix.
+Brodeur (2018) situates his contribution within a growing body of work on the economic consequences of terrorism. He highlights seminal studies by Abadie and Gardeazabal (2003, 2008), which document substantial economic costs of terrorism in the Basque Country and across countries, and by Blomberg, Hess, and Orphanides (2004) as well as Enders and Sandler (2005), who show macroeconomic losses. At the regional and sectoral level, Greenbaum, Dugan, and LaFree (2007) and Öcal and Yildirim (2010) examine local economic impacts in Italy and Turkey. Mechanisms through which terrorism affects specific outcomes have also been studied, such as real estate markets (Besley & Mueller 2012; Abadie & Dermisi 2008) and well-being (Frey, Luechinger & Stutzer 2007).
 
-## Recent Literature on the Economic Consequences of Terrorism (Post-2018)
+Brodeur complements this earlier macro-level research by exploiting variation between successful and failed attacks at the U.S. county level, providing new micro-level causal evidence. This positions his work as a **methodological innovation** that later studies could build upon.
 
-Research on the economic effects of terrorism has continued to grow since Brodeur (2018).\
-While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms.\
-This shows the continuing interest in understanding how terrorism shapes economies at different levels.
+### Recent Literature on the Economic Consequences of Terrorism (Post-2018)
+
+Research on the economic effects of terrorism has continued to grow since Brodeur (2018). While his study provided micro-level causal evidence for U.S. counties, later work has explored new outcomes (such as inequality and business failures), expanded geographic coverage, and reviewed broader economic mechanisms. This shows the continuing interest in understanding how terrorism shapes economies at different levels.
 
 ### Selected Studies After 2018
 
@@ -852,18 +858,19 @@ This shows the continuing interest in understanding how terrorism shapes economi
     Extends the logic of his 2018 terrorism study to mass shootings, analyzing their local economic impact.\
     [RePEc link](https://ideas.repec.org/p/zbw/glodps/1133.html?utm_source=chatgpt.com)
 
-### Studies Citing Brodeur (2018)
+### How New Studies Relate to Brodeur (2018)
 
-We have identified two recent studies that explicitly cite Brodeur (2018) and build on his findings regarding the economic consequences of terrorism:
+Two recent studies explicitly build on Brodeur (2018), using his distinction between successful and failed attacks as a source of causal identification:
 
--   **Amarasinghe (2023), “Public sentiment in times of terror,” Journal of Development Economics**
-    -   Cites Brodeur (2018) when describing the identification strategy based on successful vs. failed attacks (p. 4).\
-    -   Refers to Brodeur’s findings on employment and wages in the related literature section (p. 5).\
-    -   [PDF link](https://ashaniamarasinghe.github.io/docs/Public_Sentiment_in_Times_of_Terror.pdf)
--   **Chen (2025), “Rally post-terrorism,” Journal of Population Economics**
-    -   References Brodeur (2018) to highlight that successful attacks cause larger economic damage than failed ones (p. 6).\
-    -   Mentions Brodeur’s evidence on job losses and adverse business conditions after successful terrorism (p. 22).\
-    -   [Springer link](https://link.springer.com/article/10.1007/s00148-025-01106-2)
+-   **Amarasinghe (2023), Journal of Development Economics**\
+    Adopts Brodeur’s *successful vs. failed* design to study the effects of terrorism on **public sentiment**, showing clear impacts on trust and social mood.
+
+-   **Chen (2025), Journal of Population Economics**\
+    Cites Brodeur to argue that successful attacks produce larger economic damage, and finds evidence of “**rally-around-the-flag**” dynamics in political and social outcomes, i.e. a temporary surge in public support for government and leaders following external threats.
+
+### Summary of our literature research
+
+Taken together with our replication, which confirms Brodeur’s original findings on employment, finance, and housing markets, and the newer studies that extend his design to outcomes such as sentiment, politics, and inequality, the picture is clear: the **successful vs. failed attack** framework has become a **methodological benchmark** in the literature. Our work verifies the original microeconomic effects with high precision and shows their continued relevance as research expands into broader economic and social domains. The central insight — that successful attacks carry significantly greater local economic costs — remains **consistent across studies**.
 
 ## Appendix
 
