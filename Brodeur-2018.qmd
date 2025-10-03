@@ -25,7 +25,9 @@ load("Brodeur (2018).RData")
 variable_table <- read_csv("variable_table.csv")
 ```
 
-Check data (in Console) and open variable_table \# Motivation
+Check data (in Console) and open variable_table
+
+# Motivation
 
 The motivation section responds to the following questions:
 
@@ -36,15 +38,48 @@ First, the research question is relevant because understanding the impact of ter
 
 Thirdly and most importantly, (percieved) costs of terror attacks are huge. Understand such impacts would benefit countries where terror attacks are proeminent, such as the United States of America, where the paper has been conducted.
 
-More specifically, the paper investigates the direct impact of terror attacks on employement trough \* Employement rate, - General, through "100 x Log Employment (per capita)" - Industry-wise, trough \* 100 x Log Manufacturing Employment (per capita) \* 100 x Log Construction Employment (per capita) \* 100 x Log Retail Employment (per capita) \* 100 x Log Wholesale Employment (per capita) \* 100 x Log Services Employment (per capita) \* 100 x Log Finance Employment (per capita) \* Earning (locall, at the country scale), through - 100 x Log Real Earnings (per capita) - 100 x Log Real Earnings per Job
+More specifically, the paper investigates the direct impact of terror attacks on employement trough 
 
-as well as through potential channels, such as \* Destruciton of human and physiacal capital \* Consumer and investment behavior \* Housing Market \* Migration \* Counterterrorism expenditures
+**Employement rate**: 
+General, through "100 x Log Employment (per capita)", or
+Industry-wise, trough", or
+
+* 100 x Log Manufacturing Employment (per capita) 
+
+* 100 x Log Construction Employment (per capita) 
+
+* 100 x Log Retail Employment (per capita) 
+
+* 100 x Log Wholesale Employment (per capita) 
+
+* 100 x Log Services Employment (per capita) 
+
+* 100 x Log Finance Employment (per capita) 
+
+
+* Earning (locall, at the country scale), through
+  - 100 x Log Real Earnings (per capita) 
+  - 100 x Log Real Earnings per Job
+
+as well as through potential channels, such as 
+
+* Destruciton of human and physiacal capital 
+
+* Consumer and investment behavior 
+
+* Housing Market 
+
+* Migration 
+
+* Counterterrorism expenditures
 
 ## Answers:
 
-1.  Difficult topic, no consensus yet and interesting application prospects for states and country.
+### 1. Relevance
 
-**2. Hypothesis**
+Difficult topic, no consensus yet and interesting application prospects for states and country.
+
+### 2. Hypothesis
 
 Effects of TA on local employement is ambiguous to the many channels at work.
 
@@ -66,19 +101,99 @@ This section responds to the following question:
 -   What are the key variables?
 -   How are those variable measured?
 
-First important source is the Global Terrorism Database (2017), firstly established a counselling company, Pinkerton Global Intelligence Services, and now maintained by the National Consortium for the Study of Terrorism and Responses to Terrorism (START). Time period is 1970 to 2013. 1993 is missing because the box of data fell out of a truck during transit. Information sources are media articles, electronics news archive, and other existing datasets. Variable measurement is unkown, probably 'manual'. Main variables are - date, - location (at the county level) - description of each terror attack, allowing for cross-matching with other dataset with other datasets - attack type (governement buildings, businesses, ...) - weapons type (biological, explosives, incendiary, ...) - number of deaths - number of injured people - property dammage
+## GTD
+
+First important source is the Global Terrorism Database (2017), firstly established a counselling company, Pinkerton Global Intelligence Services, and now maintained by the National Consortium for the Study of Terrorism and Responses to Terrorism (START).
+
+Time period is 1970 to 2013. 1993 is missing because the box of data fell out of a truck during transit.
+
+Information sources are media articles, electronics news archive, and other existing datasets.
+
+Variable measurement is unkown, probably 'manual'.
+
+Main variables are
+- date
+
+- location (at the county level)
+	
+- description of each terror attack, allowing for cross-matching with other dataset with other datasets
+
+- attack type (governement buildings, businesses, ...)
+
+- weapons type (biological, explosives, incendiary, ...)
+
+- number of deaths - number of injured people 
+
+- property damage
 
 **Note**, the SUCESSFULL variable was constructed using this dataset
 
-Second important dataset is Country Business Patterns (CBD) datasets, coming form the Business Register, maintained by the US Census Bureau. Time period is 1970 to 2013. Information sources is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firm is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firms. Variable measurement is then admininstrative or survey. Main variables are: - number of establishements - establishement location - employement during the middle of March - quarter payroll - annual payroll
+## CBD
 
-**Note**, Governement, military employement, rail transportation, household employement industries are present.
+Second important dataset is Country Business Patterns (CBD) datasets, coming form the Business Register, maintained by the US Census Bureau.
 
-An additionnal datasets was used to compare finding and test their robustness, the Bureau of Economic Analysis (BEA). Main Variables: - Number of jobs in a country
+Time period is 1970 to 2013. 
 
-Governement and military employement were added to facility comparison.
+Information sources is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firm is administrative data for single estabilshments, and Economic Census + Company Organization Survey for multi-establishement firms.
+
+Variable measurement is then admininstrative or survey.
+
+Main variables are:
+
+- number of establishments
+
+- establishment location
+
+- employment during the middle of March
+
+- quarter payroll
+
+- annual payroll
+
+
+**Note**, Governement, military employement, rail transportation, household employement industries are absent
+
+## Additionnal datasets
+
+Additionnal datasets were used to compare findings and test their robustness, the Bureau of Economic Analysis (BEA), the Michigan Survey of Consumer (MSC) and Terror-related news stories
+
+### BEA
+As this dataset comes from the Bureau of Economic Analysis, the location of said data is the USA.
+Time period is 1970 - 2013, and the information comes from both administrative data and survey.
+
+Main Variable:
+
+- Number of jobs in a country
+
+And the way said variable is measurement is an estimation through other indicators.
+
+Governement and military employement were excluded to facility comparison.
 
 **Note** unpaid family workers and volunteers are counted.
+
+## MSC
+
+Dataset containing information collected by the University of Michigan (USA) between 2000 and 2021.
+The information was collected through surveys and the variable measurement are binary ("Yes" or "No").
+
+The main variables are:
+
+* Attitude on actual personal finances
+* Attitude on business conditions
+* Attitude on futur personal finances
+* Attitude on spending expectation for household items
+
+## Terror-related news stories
+
+This dataset is a manually constructed dataset using news from the ABC, CBS, NBS and archives in the United States between 2000 and 2012.
+The information and variables were and constructed as manually check with assistants.
+
+The main variables are: 
+
+* Number of news stories related to a TA from the targeted county
+* Number of news stories related to a TA without conditioning on location 
+* A binary variable being 1 if there at least one news story about the TA, else 0.
+* The duration of the news story.
 
 # Method
 
@@ -215,34 +330,6 @@ ggplot(plot_data, aes(x = event_time, y = mean_ln_emp_pop,
 
 ```
 
-### This Plot is not working yet
-
-```{r}
-df.pta <- df_es_win |>
-				group_by(event_time, successful) |>
-				mutate(mean_ln_emp_pop = mean(ln_emp_pop, na.rm = TRUE),
-							 mean_ln_real_qp1_pop = mean(ln_real_qp1_pop, na.rm = TRUE)) |>
-				ungroup()
-
-p1 <- ggplot(
-			 data = df.pta,
-			 mapping = aes(x = event_time, y = mean_ln_emp_pop)) +
-				geom_line(mapping = aes(color = as.factor(successful))) +
-				scale_x_continuous(breaks = seq(-3, 3)) +
-				labs(color = "successful") +
-				ggtitle("Parallel Trend Assumption - Employement per capita")
-
-p2 <- ggplot(
-			 data = df.pta,
-			 mapping = aes(x = event_time, y = mean_ln_real_qp1_pop)) +
-				geom_line(mapping = aes(color = as.factor(successful))) +
-				scale_x_continuous(breaks = seq(-3, 3)) +
-				labs(color = "successful") +
-				ggtitle("Parallel Trend Assumption - Earnings per capita")
-
-p1 / p2
-```
-
 ## Exogeneity
 
 Brodeur includes year fixed effects (absorbing nationwide shocks such as recessions) and month fixed effects (seasonality) He also includes county fixed effects absorbing time-invariant county heterogeneity. Together, these control for common macro shocks.
@@ -316,11 +403,11 @@ Direct comparison with the first model but including the SUCESSFUL variable. Suc
 
 **Third to Six Model**
 
-Variable such as 'non-american' target and 'logistically international', as well as another variable absorbing employement shocks are statistically significant at the 5% level.
+Variable such as 'non-american' target and 'logistically international', as well as another variable absorbing employement shocks are taken into account. Estimate of the treatment (SUCESSFUL) is still significant at the 5% level
 
 #### Plausibility
 
-There is a significant negative effect of successfulness of an attack on job/capita. The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimateThe standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate.
+There is a significant negative effect of successfulness of an attack on job/capita. The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate. The standard error a half as high as the estimate, indicating confidence in that the estimate is close to the true estimate.
 
 ### Earnings per capita
 
